@@ -9,3 +9,6 @@ ln -s ~/workspace/dotfiles/.gitconfig ~/.gitconfig
 
 echo 'Linking .gitignore...'
 ln -s ~/workspace/dotfiles/.gitignore ~/.gitignore
+
+echo 'Linking Neovim configuration...'
+ln -s ~/workspace/dotfiles/nvim ~/.config/nvim
