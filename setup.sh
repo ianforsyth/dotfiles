@@ -6,3 +6,6 @@ source ~/.zshrc
 
 echo 'Linking .gitconfig...'
 ln -s ~/workspace/dotfiles/.gitconfig ~/.gitconfig
+
+echo 'Linking .gitignore...'
+ln -s ~/workspace/dotfiles/.gitignore ~/.gitignore

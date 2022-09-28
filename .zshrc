@@ -19,6 +19,8 @@ alias deploy='./deploy.sh'
 alias pgh='docker stop relay_db_1; brew services start postgresql'
 alias pgr='brew services stop postgresql; docker start relay_db_1'
 
+alias dotfiles='cd ~/workspace/dotfiles'
+
 alias strava='cd ~/workspace/strava/'
 
 alias active='cd ~/workspace/strava/active'
