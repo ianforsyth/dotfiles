@@ -49,11 +49,6 @@ vim.api.nvim_create_autocmd({"VimLeavePre"}, {
   callback = save_session,
 })
 
---[[ vim.api.nvim_create_user_command("WList", "WorkspacesList", {}) */ ]]
---[[ vim.api.nvim_create_user_command("WAdd", "WorkspacesAdd <args>", { nargs = 1 }) */ ]]
---[[ vim.api.nvim_create_user_command("WRemove", "WorkspacesRemove <args>", { nargs = 1 }) */ ]]
---[[ vim.api.nvim_create_user_command("WRename", "WorkspacesRename <args>", { nargs = 1 }) */ ]]
-
 workspaces.setup({
   hooks = {
     open_pre = save_session,

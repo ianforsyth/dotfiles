@@ -67,10 +67,10 @@ return packer.startup(function(use)
   -- Telescope
   use "nvim-telescope/telescope.nvim"
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' } -- Better sorting in telescope results
-  use { "nvim-telescope/telescope-file-browser.nvim" }
+  use {"nvim-telescope/telescope-file-browser.nvim" }
 
   -- Treesitter
-  use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
+  use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
 
   -- Commenting
   use "numToStr/Comment.nvim"
@@ -86,7 +86,7 @@ return packer.startup(function(use)
 
   -- Bufferline
   use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}
-  use { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
+  use {'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
 
   -- Workspaces
   use 'natecraddock/workspaces.nvim'
