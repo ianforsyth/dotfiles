@@ -1,0 +1,43 @@
+[user]
+  name = Ian Forsyth
+  email = ian@ianforsyth.com
+[alias]
+  co = checkout
+  cob = checkout -b
+  ac = !git add -A && git commit -m
+  bc = cherry -v main --abbrev
+  amend = !git add . && git commit --amend --no-edit
+  fixup = !sh -c 'REV=$(git rev-parse $1) && git add . && git commit --fixup $@ && GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash $REV^' -
+  s = status
+  bd = branch -D
+  cleanup = !git co main && git pull && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d
+  back = reset --soft HEAD~1
+  rim = rebase -i main
+  wip = !git add -A && git commit --no-verify -m "WIP"
+  tb = ticket -b
+  clear = !git add . && git reset --hard HEAD
+[url "ssh://git@github.com/"]
+  insteadOf = https://github.com/
+[filter "media"]
+  required = true
+  clean = git media clean %f
+  smudge = git media smudge %f
+[filter "hawser"]
+  clean = git hawser clean %f
+  smudge = git hawser smudge %f
+  required = true
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+[core]
+  excludesfile = ~/.gitignore
+[push]
+  default = current
+[http]
+	sslVerify = false
+[pull]
+	rebase = true
+[rebase]
+	autoStash = true
