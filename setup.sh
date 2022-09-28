@@ -6,4 +6,3 @@ source ~/.zshrc
 
 echo 'Linking .gitconfig...'
 ln -s ~/workspace/dotfiles/.gitconfig ~/.gitconfig
-source ~/.gitconfig
