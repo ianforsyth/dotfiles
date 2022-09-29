@@ -3,7 +3,7 @@ alias ll='ls -la'
 alias ..='cd ..'
 alias rm='rm -i'
 alias rmd='rm -rf i'
-alias cl='clear'
+alias c='clear'
 
 alias e='nvim'
 
@@ -22,16 +22,11 @@ alias pgr='brew services stop postgresql; docker start relay_db_1'
 alias dotfiles='cd ~/workspace/dotfiles'
 
 alias strava='cd ~/workspace/strava/'
-
 alias active='cd ~/workspace/strava/active'
 alias bullhorn='cd ~/workspace/strava/bullhorn'
 alias config='cd ~/workspace/strava/configuration/'
 alias cowbell='cd ~/workspace/strava/cowbell'
 alias dass='cd ~/workspace/strava/dass'
-
-alias bumpPatch="sbt 'bumpVersion patch'"
-alias bumpMinor="sbt 'bumpVersion minor'"
-alias bumpMajor="sbt 'bumpVersion major'"
 
 alias pr='open "https://github.com/strava/${PWD##*/}/compare/$(git symbolic-ref --short -q HEAD)?expand=1"'
 
