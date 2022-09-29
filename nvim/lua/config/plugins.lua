@@ -67,7 +67,6 @@ return packer.startup(function(use)
   -- Telescope
   use "nvim-telescope/telescope.nvim"
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' } -- Better sorting in telescope results
-  use {"nvim-telescope/telescope-file-browser.nvim" }
 
   -- Treesitter
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
@@ -90,6 +89,9 @@ return packer.startup(function(use)
 
   -- Workspaces
   use 'natecraddock/workspaces.nvim'
+
+  -- ToggleTerm
+  use "akinsho/toggleterm.nvim"
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

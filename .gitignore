@@ -1,3 +1,7 @@
 .byebug_history
 .session.vim
 .DS_Store
+
+.bloop
+.metals
+*metals.sbt
