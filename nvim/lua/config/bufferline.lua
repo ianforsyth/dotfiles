@@ -9,6 +9,9 @@ end
 
 bufferline.setup({
   options = {
+    indicator = {
+      style = 'underline',
+    },
     show_buffer_close_icons = false,
     always_show_bufferline = true,
     offsets = {

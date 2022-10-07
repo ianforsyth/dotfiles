@@ -47,23 +47,6 @@ return packer.startup(function(use)
 
   use "ellisonleao/gruvbox.nvim" -- Colorscheme
 
-  -- Should try to swap out luasnip for ultisnips or port all those over
-  use "hrsh7th/nvim-cmp" -- The completion plugin
-  use "hrsh7th/cmp-buffer" -- buffer completions
-  use "hrsh7th/cmp-path" -- path completions
-  use "hrsh7th/cmp-cmdline" -- cmdline completions
-  use "saadparwaiz1/cmp_luasnip" -- snippet completions
-  use "hrsh7th/cmp-nvim-lsp"
-  use "hrsh7th/cmp-nvim-lua"
-
-  -- Snippets
-  use "L3MON4D3/LuaSnip" --snippet engine
-  use "rafamadriz/friendly-snippets" -- a bunch of snippets to use 
-
-  -- LSP
-  use "neovim/nvim-lspconfig" -- enable LSP
-  use "williamboman/nvim-lsp-installer" -- Nice interface to install new lsps
-
   -- Telescope
   use "nvim-telescope/telescope.nvim"
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' } -- Better sorting in telescope results
@@ -83,7 +66,7 @@ return packer.startup(function(use)
   -- Explorer
   use { 'kyazdani42/nvim-tree.lua', requires = { 'kyazdani42/nvim-web-devicons' }, { tag = 'nightly' } }
 
-  -- Bufferline
+  -- Bufferline and status line
   use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}
   use {'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
 
@@ -92,6 +75,10 @@ return packer.startup(function(use)
 
   -- ToggleTerm
   use "akinsho/toggleterm.nvim"
+
+  -- May have a native solution to this so can remove if that works for a while
+  -- More intuitive buffer closing
+  --[[ use "moll/vim-bbye" ]]
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
