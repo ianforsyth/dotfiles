@@ -34,5 +34,6 @@ keymap("n", "<leader>e", "<cmd>NvimTreeFindFileToggle<CR>", opts)
 -- Navigate buffers
 keymap("n", "<C-l>", ":bnext<CR>", opts)
 keymap("n", "<C-h>", ":bprevious<CR>", opts)
-keymap("n", "<leader>x", ":bd<CR>", opts) -- Close buffer
-keymap("n", "<leader>b", ":BufferLinePick<CR>", opts) -- Close buffer
+--[[ keymap("n", "<leader>q", ":Bdelete<CR>", opts) -- Close buffer ]] -- Can remove this later if the current version works for a while
+keymap("n", "<leader>q", ":bp<CR>:bd#<CR>", opts) -- Close buffer and preserve window
+keymap("n", "<leader>x", ":BufferLineCloseLeft<CR>:BufferLineCloseRight<CR>", opts) -- Close all but active buffer

@@ -24,7 +24,6 @@ local options = {
   wrap = false,                            -- display lines as one long line
   scrolloff = 8,                           -- extra room below the end of a file
   guifont = "monospace:h17",               -- the font used in graphical neovim applications
-  --[[ fillchars = "vert: ", ]]
 }
 
 vim.opt.shortmess:append "c" -- Not sure if this is doing anything
