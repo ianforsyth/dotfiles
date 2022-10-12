@@ -76,9 +76,35 @@ return packer.startup(function(use)
   -- ToggleTerm
   use "akinsho/toggleterm.nvim"
 
-  -- May have a native solution to this so can remove if that works for a while
-  -- More intuitive buffer closing
-  --[[ use "moll/vim-bbye" ]]
+
+  use {
+    'karb94/neoscroll.nvim',
+    config = function()
+      require('neoscroll').setup()
+    end
+  }
+  use {
+    'rmagatti/goto-preview',
+    config = function()
+      require('goto-preview').setup()
+    end
+  }
+
+  use({
+    "hrsh7th/nvim-cmp",
+    requires = {
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-vsnip" },
+      { "hrsh7th/vim-vsnip" },
+    },
+  })
+  use({
+    "scalameta/nvim-metals",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "mfussenegger/nvim-dap",
+    },
+  })
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

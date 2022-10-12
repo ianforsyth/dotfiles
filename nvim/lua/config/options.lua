@@ -26,7 +26,7 @@ local options = {
   guifont = "monospace:h17",               -- the font used in graphical neovim applications
 }
 
-vim.opt.shortmess:append "c" -- Not sure if this is doing anything
+-- vim.opt.shortmess:append "c" -- Not sure if this is doing anything
 
 for k, v in pairs(options) do
   vim.opt[k] = v
