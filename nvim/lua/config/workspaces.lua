@@ -16,12 +16,14 @@ local load_session = function()
   os.execute('grep -v "argadd" .session.vim > .tmp_session.vim') -- Removing the launch argument to prevent an extra buffer
   os.execute('mv .tmp_session.vim .session.vim')
   vim.cmd('source .session.vim')
-  vim.cmd('NvimTreeFindFileToggle')
+  -- Open the file explorere but focus on the editor window
+  -- vim.cmd('NvimTreeFindFileToggle')
+  vim.cmd('wincmd p') 
 end
 
 local save_session = function ()
   if session_exists() then
-    vim.cmd('NvimTreeClose') -- NvimTree messes up saved buffers so just close it
+    -- vim.cmd('NvimTreeClose') -- NvimTree messes up saved buffers so just close it
     vim.cmd('silent mksession! .session.vim')
   end
   vim.cmd('silent bufdo :bw') -- Close all currently open buffers
