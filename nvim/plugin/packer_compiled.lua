@@ -79,6 +79,11 @@ _G.packer_plugins = {
     path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/Comment.nvim",
     url = "https://github.com/numToStr/Comment.nvim"
   },
+  ["alpha-nvim"] = {
+    loaded = true,
+    path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/alpha-nvim",
+    url = "https://github.com/goolord/alpha-nvim"
+  },
   ["bufferline.nvim"] = {
     loaded = true,
     path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
@@ -135,11 +140,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/nvim-metals",
     url = "https://github.com/scalameta/nvim-metals"
-  },
-  ["nvim-tree.lua"] = {
-    loaded = true,
-    path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
-    url = "https://github.com/kyazdani42/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
     loaded = true,

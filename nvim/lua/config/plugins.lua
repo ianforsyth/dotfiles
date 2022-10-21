@@ -64,7 +64,7 @@ return packer.startup(function(use)
   use "tpope/vim-rhubarb"
 
   -- Explorer
-  use { 'kyazdani42/nvim-tree.lua', requires = { 'kyazdani42/nvim-web-devicons' }, { tag = 'nightly' } }
+  -- use { 'kyazdani42/nvim-tree.lua', requires = { 'kyazdani42/nvim-web-devicons' }, { tag = 'nightly' } }
 
   -- Bufferline and status line
   use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}
@@ -105,6 +105,8 @@ return packer.startup(function(use)
       "mfussenegger/nvim-dap",
     },
   })
+
+  use { 'goolord/alpha-nvim' }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
