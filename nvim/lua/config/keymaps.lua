@@ -36,7 +36,7 @@ keymap("n", "<leader>x", ":BufferLineCloseLeft<CR>:BufferLineCloseRight<CR>", op
 -- LSP
 -- keymap("n", "gd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", opts)
 -- keymap("n", "gt", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", opts)
-keymap("n", "gd", "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>", opts)
+-- keymap("n", "gd", "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>", opts)
 keymap("n", "gt", "<cmd>lua vim.lsp.buf.hover()()<CR>", opts)
 keymap('n', "gr", "<cmd>lua require('telescope.builtin').lsp_references()<CR>", opts)
 keymap("n", "ge", "<cmd>lua vim.diagnostic.goto_next { wrap = true }<CR>", opts)
