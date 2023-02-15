@@ -16,7 +16,7 @@ bufferline.setup({
     always_show_bufferline = true,
     offsets = {
       {
-        filetype = "NvimTree",
+        filetype = "nerdtree",
         text = function()
           return "Project: " .. capitalize(vim.fn.fnamemodify(vim.fn.getcwd(), ':t'))
         end,
