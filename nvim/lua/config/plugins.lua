@@ -78,13 +78,9 @@ return packer.startup(function(use)
   -- ToggleTerm
   use "akinsho/toggleterm.nvim"
 
+  -- File explorer
+  use "preservim/nerdtree"
 
-  use {
-    'karb94/neoscroll.nvim',
-    config = function()
-      require('neoscroll').setup()
-    end
-  }
   use {
     'rmagatti/goto-preview',
     config = function()
@@ -92,23 +88,9 @@ return packer.startup(function(use)
     end
   }
 
-  use({
-    "hrsh7th/nvim-cmp",
-    requires = {
-      { "hrsh7th/cmp-nvim-lsp" },
-      { "hrsh7th/cmp-vsnip" },
-      { "hrsh7th/vim-vsnip" },
-    },
-  })
-  use({
-    "scalameta/nvim-metals",
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "mfussenegger/nvim-dap",
-    },
-  })
-
   use { 'goolord/alpha-nvim' }
+
+  use {'neoclide/coc.nvim', branch = 'release'}
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
