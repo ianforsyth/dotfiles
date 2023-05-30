@@ -11,6 +11,10 @@ vim.g.maplocalleader = " "
 -- Cycle through windows
 keymap("n", "<leader>c", "<C-w>W", opts)
 
+-- Resize split widths
+keymap("n", "<C-.>", "20<C-w>>", opts)
+keymap("n", "<C-,>", "20<C-w><", opts)
+
 -- Save and escape
 keymap("i", "jj", "<ESC>:w<CR>", opts)
 
@@ -31,7 +35,7 @@ keymap("n", "<leader>e", "g:NERDTree.IsOpen() ? '<cmd>NERDTreeClose<CR>' : bufex
 -- Navigate buffers
 keymap("n", "<C-l>", ":bnext<CR>", opts)
 keymap("n", "<C-h>", ":bprevious<CR>", opts)
-keymap("n", "<leader>q", ":bp<CR>:bd#<CR>", opts) -- Close buffer and preserve window
+keymap("n", "<leader>q", ":bw<CR>", opts) -- Close buffer and preserve window
 keymap("n", "<leader>x", ":BufferLineCloseLeft<CR>:BufferLineCloseRight<CR>", opts) -- Close all but active buffer
 
 -- LSP
@@ -45,6 +49,16 @@ function _G.show_docs()
         cmd('!' .. vim.o.keywordprg .. ' ' .. cw)
     end
 end
+
+function _G.check_back_space()
+    local col = vim.fn.col('.') - 1
+    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+        return true
+    else
+        return false
+    end
+end
+
 -- keymap("n", "gd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", opts)
  keymap("n", "gtd", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", opts)
 -- keymap("n", "gd", "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>", opts)
@@ -69,7 +83,7 @@ keymap("n", "gt", "<CMD>lua _G.show_docs()<CR>", opts)
 -- " Use K to show documentation in preview window.
 -- nnoremap <silent> K :call ShowDocumentation()<CR>
 
-keymap("i", "<tab>", "pumvisible() ? coc#_select_confirm() : '<C-G>u<CR><C-R>=coc#on_enter()<CR>'", {silent = true, expr = true, noremap = true})
+keymap("i", "<tab>", 'coc#pum#visible() ? coc#pum#confirm() : v:lua.check_back_space() ? "<tab>" : coc#refresh()', {silent = true, expr = true, noremap = true})
 
 
 -- keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)

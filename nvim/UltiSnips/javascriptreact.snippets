@@ -1,0 +1,31 @@
+extends javascript
+
+snippet cl
+className="${1}"${0}
+endsnippet
+
+snippet cni
+import cn from 'classnames';
+endsnippet
+
+snippet rc
+import React from 'react';
+
+export const ${1:NAME} = () => {
+	return (
+		${2:<div>
+			${3}
+		</div>}
+	);
+}
+endsnippet
+
+snippet t
+<${1:div}${2: className='${3:CLASS}'}>${0:${VISUAL}}</$1>
+endsnippet
+
+snippet tb
+<${1:div}${2: className='${3:CLASS}'}>
+	${0:${VISUAL}}
+</$1>
+endsnippet

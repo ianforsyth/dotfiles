@@ -94,6 +94,11 @@ _G.packer_plugins = {
     path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/coc.nvim",
     url = "https://github.com/neoclide/coc.nvim"
   },
+  ["cql-vim"] = {
+    loaded = true,
+    path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/cql-vim",
+    url = "https://github.com/elubow/cql-vim"
+  },
   ["gitsigns.nvim"] = {
     loaded = true,
     path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
@@ -170,6 +175,11 @@ _G.packer_plugins = {
     path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/toggleterm.nvim",
     url = "https://github.com/akinsho/toggleterm.nvim"
   },
+  ultisnips = {
+    loaded = true,
+    path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/ultisnips",
+    url = "https://github.com/SirVer/ultisnips"
+  },
   ["vim-fugitive"] = {
     loaded = true,
     path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/vim-fugitive",
@@ -179,6 +189,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/vim-rhubarb",
     url = "https://github.com/tpope/vim-rhubarb"
+  },
+  ["vim-test"] = {
+    loaded = true,
+    path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/vim-test",
+    url = "https://github.com/vim-test/vim-test"
   },
   ["workspaces.nvim"] = {
     loaded = true,
