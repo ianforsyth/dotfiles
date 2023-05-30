@@ -54,11 +54,12 @@ return packer.startup(function(use)
   -- Treesitter
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
 
-  use {"solarnz/thrift.vim"}
-
   -- Commenting
   use "numToStr/Comment.nvim"
   use 'JoosepAlviste/nvim-ts-context-commentstring'
+
+  -- Snippets
+  use "SirVer/ultisnips"
 
   -- Git
   use "lewis6991/gitsigns.nvim"
@@ -91,6 +92,13 @@ return packer.startup(function(use)
   use { 'goolord/alpha-nvim' }
 
   use {'neoclide/coc.nvim', branch = 'release'}
+
+  -- Language specific syntax
+  use {'elubow/cql-vim'} -- Cassandra CQL
+  use {'solarnz/thrift.vim'} -- Thrift interface
+
+  -- Test runner
+  use {'vim-test/vim-test' }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
