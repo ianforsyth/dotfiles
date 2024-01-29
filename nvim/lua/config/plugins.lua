@@ -59,7 +59,7 @@ return packer.startup(function(use)
   use 'JoosepAlviste/nvim-ts-context-commentstring'
 
   -- Snippets
-  use "SirVer/ultisnips"
+  -- use "SirVer/ultisnips"
 
   -- Git
   use "lewis6991/gitsigns.nvim"
@@ -68,6 +68,9 @@ return packer.startup(function(use)
 
   -- Explorer
   -- use { 'kyazdani42/nvim-tree.lua', requires = { 'kyazdani42/nvim-web-devicons' }, { tag = 'nightly' } }
+  
+  -- Copilot
+  -- use { 'github/copilot.vim' }
 
   -- Bufferline and status line
   use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}

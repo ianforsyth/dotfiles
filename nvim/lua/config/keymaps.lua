@@ -28,6 +28,11 @@ keymap("n", "<leader>f", "<cmd>Telescope live_grep<CR>", opts)
 keymap("n", "<leader>F", "<cmd>Telescope grep_string<CR>", opts)
 keymap("n", "<leader>w", "<cmd>Telescope workspaces<CR>", opts)
 
+-- Vim Test
+keymap("n", "tf", "<cmd>TestFile<CR>", opts)
+keymap("n", "tl", "<cmd>TestLast<CR>", opts)
+keymap("n", "tn", "<cmd>TestNearest<CR>", opts)
+
 -- Toggle file explorer
 -- keymap("n", "<leader>e", "<cmd>NERDTreeFind<CR>", opts)
 keymap("n", "<leader>e", "g:NERDTree.IsOpen() ? '<cmd>NERDTreeClose<CR>' : bufexists(expand('%')) ? '<cmd>NERDTreeFind<CR>' : '<cmd>NERDTree<CR>'", {silent = true, expr = true, noremap = true})
@@ -36,7 +41,7 @@ keymap("n", "<leader>e", "g:NERDTree.IsOpen() ? '<cmd>NERDTreeClose<CR>' : bufex
 keymap("n", "<C-l>", ":bnext<CR>", opts)
 keymap("n", "<C-h>", ":bprevious<CR>", opts)
 keymap("n", "<leader>q", ":bw<CR>", opts) -- Close buffer and preserve window
-keymap("n", "<leader>x", ":BufferLineCloseLeft<CR>:BufferLineCloseRight<CR>", opts) -- Close all but active buffer
+keymap("n", "<leader>x", ":%bd<CR>", opts) -- Close all buffers
 
 -- LSP
 function _G.show_docs()
@@ -63,27 +68,28 @@ end
  keymap("n", "gtd", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", opts)
 -- keymap("n", "gd", "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>", opts)
 -- keymap("n", "gt", "<cmd>lua vim.lsp.buf.hover()()<CR>", opts)
--- keymap('n', "gr", "<cmd>lua require('telescope.builtin').lsp_references()<CR>", opts)
--- keymap("n", "ge", "<cmd>lua vim.diagnostic.goto_next { wrap = true }<CR>", opts)
 keymap("n", "gd", "<Plug>(coc-definition)", opts)
 keymap("n", "gtd", "<Plug>(coc-type-definition)", opts)
 keymap("n", "gt", "<CMD>lua _G.show_docs()<CR>", opts)
+keymap("n", "gb", "<CMD>.GBrowse<CR>", opts)
 -- keymap('n', "gr", "<cmd>lua require('telescope.builtin').lsp_references()<CR>", opts)
--- keymap("n", "ge", "<cmd>lua vim.diagnostic.goto_next { wrap = true }<CR>", opts)
+
+keymap("n", "ge", "<cmd>lua vim.diagnostic.goto_next { wrap = true }<CR>", opts)
+keymap("n", "gn", '<cmd>Gitsigns next_hunk<CR>', opts)
 
 -- nmap <silent> [g <Plug>(coc-diagnostic-prev)
 -- nmap <silent> ]g <Plug>(coc-diagnostic-next)
 --
--- " GoTo code navigation.
--- nmap <silent> gd <Plug>(coc-definition)
--- nmap <silent> gy <Plug>(coc-type-definition)
--- nmap <silent> gi <Plug>(coc-implementation)
--- nmap <silent> gr <Plug>(coc-references)
---
 -- " Use K to show documentation in preview window.
 -- nnoremap <silent> K :call ShowDocumentation()<CR>
 
-keymap("i", "<tab>", 'coc#pum#visible() ? coc#pum#confirm() : v:lua.check_back_space() ? "<tab>" : coc#refresh()', {silent = true, expr = true, noremap = true})
+vim.g.coc_snippet_next = '<tab>'
+vim.api.nvim_set_keymap(
+  'i', 
+  '<Tab>', 
+  'pumvisible() ? coc#_select_confirm() : coc#expandableOrJumpable() ? "<C-r>=coc#rpc#request(\'doKeymap\', [\'snippets-expand-jump\',\'\'])<CR>" : v:lua.check_backspace() ? "<Tab>" : coc#refresh()', 
+  { expr = true, silent = true }
+)
 
 
 -- keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)

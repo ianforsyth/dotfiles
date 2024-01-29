@@ -175,11 +175,6 @@ _G.packer_plugins = {
     path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/toggleterm.nvim",
     url = "https://github.com/akinsho/toggleterm.nvim"
   },
-  ultisnips = {
-    loaded = true,
-    path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/ultisnips",
-    url = "https://github.com/SirVer/ultisnips"
-  },
   ["vim-fugitive"] = {
     loaded = true,
     path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/vim-fugitive",
