@@ -1,3 +1,19 @@
+snippet lg
+logger.info(s"IFLOG: \${${1:"${2:here}"}}");
+endsnippet
+
+snippet test
+logger.info(${1:first} ${2:second} "${3}");
+endsnippet
+
 snippet cc
 // IF (`date +%m/%d/%y`):
+endsnippet
+
+snippet ifelif "ifelif" b
+if(${1:cond}) {
+	${2:/* if bloc */}
+} else if(${3:cond}) {
+	${4:/* else if bloc */}
+}
 endsnippet
