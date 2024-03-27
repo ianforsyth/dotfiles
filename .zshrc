@@ -1,5 +1,6 @@
 source ~/workspace/dotfiles/.strava-commands.sh
 source ~/workspace/dotfiles/.saas-commands
+source ~/workspace/dotfiles/.localsecrets
 
 # ----- Aliases -----
 alias ll='ls -la'
@@ -14,7 +15,7 @@ alias profile='e ~/.zshrc'
 alias reload='source ~/.zshrc'
 alias envim='e ~/.config/nvim/'
 
-alias saas='cd ~/workspace/saas'
+alias saas='cd ~/workspace/saas-starter'
 
 alias vh='cd ~/workspace/saas/; vim .'
 alias sc='cd ~/workspace/saas/saas-client'
@@ -23,6 +24,7 @@ alias deploy='./deploy.sh'
 
 alias dotfiles='cd ~/workspace/dotfiles'
 
+# Strava specific -------------------------
 alias strava='cd ~/workspace/strava/'
 alias active='cd ~/workspace/strava/active'
 alias bullhorn='cd ~/workspace/strava/bullhorn'
@@ -30,9 +32,15 @@ alias config='cd ~/workspace/strava/configuration/'
 alias cowbell='cd ~/workspace/strava/cowbell'
 alias comms='cd ~/workspace/strava/comms'
 alias dass='cd ~/workspace/strava/dass'
+alias einkenni='cd ~/workspace/strava/einkenni'
 alias dixie='cd ~/workspace/strava/dixie'
 alias erasure='cd ~/workspace/strava/erasure'
 alias malheur='cd ~/workspace/strava/malheur'
+alias ritmo='cd ~/workspace/strava/ritmo'
+alias pike='cd ~/workspace/strava/pike'
+
+alias fmt='sbt scalafmtAll'
+# --------------------
 
 alias pr='open "https://github.com/strava/${PWD##*/}/compare/$(git symbolic-ref --short -q HEAD)?expand=1"'
 
@@ -72,6 +80,8 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export APOLLO_KEY="user:po.strava.iforsyth@strava.com:I3eYIJAd8IxSKIW7qgz5SA"
 
 export GITHUB_PACKAGES_USERNAME=ianforsyth
 

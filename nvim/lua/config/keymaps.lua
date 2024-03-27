@@ -29,6 +29,7 @@ keymap("n", "<leader>F", "<cmd>Telescope grep_string<CR>", opts)
 keymap("n", "<leader>w", "<cmd>Telescope workspaces<CR>", opts)
 
 -- Vim Test
+keymap("n", "ts", "<cmd>TestSuite<CR>", opts)
 keymap("n", "tf", "<cmd>TestFile<CR>", opts)
 keymap("n", "tl", "<cmd>TestLast<CR>", opts)
 keymap("n", "tn", "<cmd>TestNearest<CR>", opts)
@@ -36,12 +37,6 @@ keymap("n", "tn", "<cmd>TestNearest<CR>", opts)
 -- Toggle file explorer
 -- keymap("n", "<leader>e", "<cmd>NERDTreeFind<CR>", opts)
 keymap("n", "<leader>e", "g:NERDTree.IsOpen() ? '<cmd>NERDTreeClose<CR>' : bufexists(expand('%')) ? '<cmd>NERDTreeFind<CR>' : '<cmd>NERDTree<CR>'", {silent = true, expr = true, noremap = true})
-
--- Navigate buffers
-keymap("n", "<C-l>", ":bnext<CR>", opts)
-keymap("n", "<C-h>", ":bprevious<CR>", opts)
-keymap("n", "<leader>q", ":bw<CR>", opts) -- Close buffer and preserve window
-keymap("n", "<leader>x", ":%bd<CR>", opts) -- Close all buffers
 
 -- LSP
 function _G.show_docs()
@@ -55,7 +50,7 @@ function _G.show_docs()
     end
 end
 
-function _G.check_back_space()
+function _G.check_backspace()
     local col = vim.fn.col('.') - 1
     if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
         return true
@@ -63,6 +58,12 @@ function _G.check_back_space()
         return false
     end
 end
+
+-- Navigate buffers
+keymap("n", "<C-l>", ":bnext<CR>", opts)
+keymap("n", "<C-h>", ":bprevious<CR>", opts)
+keymap("n", "<leader>q", ":bw<CR>", opts) -- Close buffer and preserve window
+keymap("n", "<leader>x", ":%bd|e#|bd#<CR>", opts) -- Close all buffers except current
 
 -- keymap("n", "gd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", opts)
  keymap("n", "gtd", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", opts)

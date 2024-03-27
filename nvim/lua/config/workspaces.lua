@@ -9,7 +9,13 @@ local session_exists = function()
 end
 
 local set_working_directory = function()
-  vim.cmd('cd '..vim.fn.expand('%h')) -- Sets the working directory to whatever nvim was called on
+  local file_dir = vim.fn.expand('%:p:h') -- Gets the full path of the directory of the current file
+  if vim.fn.isdirectory(file_dir) == 1 then
+    vim.cmd('cd ' .. file_dir)
+  else
+    -- Optionally, you can set it to a default directory like your home or a project root.
+    -- vim.cmd('cd ~') -- This sets it to the user's home directory as a fallback
+  end
 end
 
 local load_session = function()
