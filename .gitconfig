@@ -10,7 +10,7 @@
   fixup = !sh -c 'REV=$(git rev-parse $1) && git add . && git commit --fixup $@ && GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash $REV^' -
   s = status
   bd = branch -D
-  cleanup = !git co main && git pull && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d
+  cleanup = !git co main && git branch | grep -v "main" | xargs git branch -D
   back = reset --soft HEAD~1
   rim = rebase -i main
   wip = !git add -A && git commit --no-verify -m "WIP"
