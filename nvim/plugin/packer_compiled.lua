@@ -180,6 +180,11 @@ _G.packer_plugins = {
     path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/vim-fugitive",
     url = "https://github.com/tpope/vim-fugitive"
   },
+  ["vim-prettier"] = {
+    loaded = true,
+    path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/vim-prettier",
+    url = "https://github.com/prettier/vim-prettier"
+  },
   ["vim-rhubarb"] = {
     loaded = true,
     path = "/Users/iforsyth/.local/share/nvim/site/pack/packer/start/vim-rhubarb",

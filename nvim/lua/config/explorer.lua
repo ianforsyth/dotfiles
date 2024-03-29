@@ -5,6 +5,7 @@
 
 vim.g["NERDTreeMinimalUI"] = 1
 vim.g["NERDTreeChDirMode"] = 2
+vim.g["NERDTreeShowHidden"] = 1
 
 -- let g:NERDTreeMinimalUI = 1
 -- let g:NERDTreeDirArrows = 1

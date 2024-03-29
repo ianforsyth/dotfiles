@@ -62,8 +62,8 @@ end
 -- Navigate buffers
 keymap("n", "<C-l>", ":bnext<CR>", opts)
 keymap("n", "<C-h>", ":bprevious<CR>", opts)
-keymap("n", "<leader>q", ":bw<CR>", opts) -- Close buffer and preserve window
-keymap("n", "<leader>x", ":%bd|e#|bd#<CR>", opts) -- Close all buffers except current
+keymap("n", "<leader>q", ":NERDTreeClose<CR>:bw<CR>", opts) -- Close buffer and preserve window (including nerdtree)
+keymap("n", "<leader>x", ":%bd!|e#|bd#<CR>", opts) -- Close all buffers except current
 
 -- keymap("n", "gd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", opts)
  keymap("n", "gtd", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", opts)
@@ -93,6 +93,7 @@ vim.api.nvim_set_keymap(
 )
 
 
+
 -- keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 -- keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 -- keymap("n", "gds", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
@@ -118,4 +119,23 @@ vim.api.nvim_set_keymap(
 -- map("n", "<leader>dso", [[<cmd>lua require"dap".step_over()<CR>]])
 -- map("n", "<leader>dsi", [[<cmd>lua require"dap".step_into()<CR>]])
 -- map("n", "<leader>dl", [[<cmd>lua require"dap".run_last()<CR>]])
+
+vim.cmd [[
+function! YankFirstDiagnostic()
+    let l:diagnostics = CocAction('diagnosticList')
+    if len(l:diagnostics) > 0
+        let l:first_diagnostic = l:diagnostics[0]['message']
+        let @+ = l:first_diagnostic
+        echo "Copied diagnostic: " . l:first_diagnostic
+    else
+        echo "No diagnostics found"
+    endif
+endfunction
+]]
+
+function _G.copy_first_diagnostic_to_clipboard()
+  vim.cmd('call YankFirstDiagnostic()')
+end
+
+keymap("n", "<leader>ce", "<cmd>lua _G.copy_first_diagnostic_to_clipboard()<CR>", opts)
 

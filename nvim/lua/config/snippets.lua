@@ -4,6 +4,6 @@ if not status_ok then
 end
 
 -- vim.g.UltiSnipsEnableSnipMate = 1
--- vim.g.UltiSnipsExpandTrigger = '<tab>'
+vim.g.UltiSnipsExpandTrigger = '<tab>'
 -- vim.g.UltiSnipsJumpForwardTrigger = '<tab>'
 -- vim.g.UltiSnipsJumpBackwardTrigger = '<s-tab>'

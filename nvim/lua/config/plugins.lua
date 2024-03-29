@@ -92,6 +92,9 @@ return packer.startup(function(use)
     end
   }
 
+  -- JS code formatting with prettier
+  use { 'prettier/vim-prettier' }
+
   use { 'goolord/alpha-nvim' }
 
   use {'neoclide/coc.nvim', branch = 'release'}
