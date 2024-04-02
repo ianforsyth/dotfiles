@@ -15,14 +15,10 @@ alias profile='e ~/.zshrc'
 alias reload='source ~/.zshrc'
 alias envim='e ~/.config/nvim/'
 
-alias saas='cd ~/workspace/saas-starter'
-
-alias vh='cd ~/workspace/saas/; vim .'
-alias sc='cd ~/workspace/saas/saas-client'
-alias sa='cd ~/workspace/saas/saas-api'
-alias deploy='./deploy.sh'
-
 alias dotfiles='cd ~/workspace/dotfiles'
+
+alias base='cd ~/workspace/base'
+alias fs='foreman start'
 
 # Strava specific -------------------------
 alias strava='cd ~/workspace/strava/'
