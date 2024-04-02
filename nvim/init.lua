@@ -33,6 +33,17 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   {
+    "neovim/nvim-lspconfig",
+    config = function()
+      require'lspconfig'.tsserver.setup{} -- Typescript
+      require'lspconfig'.solargraph.setup{} -- Ruby
+    end,
+    init = function()
+      vim.fn.system([[command -v typescript-language-server >/dev/null 2>&1 || npm install -g typescript-language-server typescript]])
+      vim.fn.system([[gem list -i solargraph >/dev/null || gem install solargraph]])
+    end
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     config = function()
