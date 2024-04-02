@@ -14,8 +14,7 @@
   back = reset --soft HEAD~1
   rim = rebase -i main
   wip = !git add -A && git commit --no-verify -m "WIP"
-  tb = ticket -b
-  clear = !git add . && git reset --hard HEAD
+  nah = !git add . && git reset --hard HEAD
 [url "ssh://git@github.com/"]
   insteadOf = https://github.com/
 [filter "media"]
