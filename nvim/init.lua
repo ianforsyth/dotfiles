@@ -76,6 +76,7 @@ require("lazy").setup({
             else
               sessions.save(session_path)
             end
+            _G.open_dashboard_if_no_buffers()
           end,
         }
       })
@@ -221,6 +222,22 @@ require("lazy").setup({
 ---------------------------------------------------------------------------------
 -- CUSTOM FUNCTIONS
 ---------------------------------------------------------------------------------
+function _G.open_dashboard_if_no_buffers()
+    local buffers = vim.api.nvim_list_bufs()
+    local buffer_loaded = false
+
+    for _, buf in ipairs(buffers) do
+        if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted and vim.api.nvim_buf_get_name(buf) ~= "" then
+            buffer_loaded = true
+            break
+        end
+    end
+
+    if not buffer_loaded then
+        vim.cmd("Dashboard")
+    end
+end
+
 function _G.create_and_open_file()
   local current_dir = vim.fn.expand('%:p:h')
   -- Input prompt for the new file name
@@ -273,6 +290,21 @@ end
 ---------------------------------------------------------------------------------
 -- AUTOCMDS AND NATIVE CONFIGS
 ---------------------------------------------------------------------------------
+vim.api.nvim_create_autocmd("VimEnter", {
+    pattern = "*",
+    callback = function()
+        -- Delay the execution to ensure all startup processes complete
+        vim.defer_fn(function() _G.open_dashboard_if_no_buffers() end, 100)
+    end,
+})
+
+vim.api.nvim_create_autocmd("BufDelete", {
+    pattern = "*",
+    callback = function()
+        -- Use a small delay to ensure the buffer list is updated before checking
+        vim.defer_fn(function() _G.open_dashboard_if_no_buffers() end, 100)
+    end,
+})
 -- IF (4/2/24) Always enter a terminal in insert mode
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
