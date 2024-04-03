@@ -13,13 +13,11 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 build.sbt
-badd +1 README.md
+badd +1 COMMONS_VERSION
 argglobal
 %argdel
-edit README.md
+edit COMMONS_VERSION
 argglobal
-balt build.sbt
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
