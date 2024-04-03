@@ -33,6 +33,55 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   {
+    'numToStr/Comment.nvim',
+    opts = {},
+    lazy = false,
+  },
+  {
+    'nvimdev/dashboard-nvim',
+    event = 'VimEnter',
+    config = function()
+      require('dashboard').setup {
+        -- config
+      }
+    end,
+    dependencies = { {'nvim-tree/nvim-web-devicons'}}
+  },
+  {
+    "natecraddock/sessions.nvim",
+    config = function()
+      require("sessions").setup()
+    end
+  },
+  {
+    "natecraddock/workspaces.nvim",
+    config = function()
+      local sessions = require("sessions")
+      -- IF (4/3/24) Needed to find the path to the symlinked directory
+      local config_path = vim.loop.fs_realpath(vim.fn.stdpath('config'))
+
+      require("workspaces").setup({
+        path = config_path .. "/workspaces",
+        hooks = {
+          open_pre = function()
+            sessions.stop_autosave()
+            vim.cmd("silent %bdelete!")
+          end,
+          open = function()
+            local current_workspace = require("workspaces").name()
+            local session_path = config_path .. "/sessions/" .. current_workspace .. "_session"
+
+            if vim.loop.fs_stat(session_path) then
+              sessions.load(session_path)
+            else
+              sessions.save(session_path)
+            end
+          end,
+        }
+      })
+    end
+  },
+  {
     "neovim/nvim-lspconfig",
     config = function()
       require'lspconfig'.tsserver.setup{} -- Typescript
@@ -215,7 +264,6 @@ end
 function _G.open_in_finder()
   local file_path = vim.fn.expand('%:p')  -- Get the full path of the current file
   if file_path ~= '' then
-    -- Command to open and highlight the file in Finder
     vim.cmd('silent !open -R ' .. vim.fn.shellescape(file_path))
   else
     print('Cannot open Finder: No file selected')
@@ -225,12 +273,6 @@ end
 ---------------------------------------------------------------------------------
 -- AUTOCMDS AND NATIVE CONFIGS
 ---------------------------------------------------------------------------------
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    require("telescope.builtin").find_files()
-  end,
-})
-
 -- IF (4/2/24) Always enter a terminal in insert mode
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
@@ -239,6 +281,15 @@ vim.api.nvim_create_autocmd("BufEnter", {
       vim.cmd("startinsert!")
     end
   end
+})
+
+-- IF (4/3/24) Reload buffers changed externally
+vim.api.nvim_create_autocmd("FileChangedShellPost", {
+  pattern = "*",
+  callback = function(args)
+    vim.cmd('checktime')
+    vim.notify("Buffer reloaded due to external change: " .. args.file, vim.log.levels.INFO)
+  end,
 })
 
 vim.diagnostic.config({
@@ -258,6 +309,8 @@ vim.keymap.set('n', '<leader>ff', function()
 end, { noremap = true, silent = true, desc = "File explorer, showing hidden files" })
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fG', builtin.grep_string, {})
+vim.api.nvim_set_keymap('n', '<leader>w', ':Telescope workspaces<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fd', ':lua _G.delete_current_file()<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>fd', ':lua _G.delete_current_file()<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>fn', ':lua _G.create_and_open_file()<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>fs', ':lua _G.open_in_finder()<CR>', { noremap = true, silent = true })
@@ -265,6 +318,8 @@ vim.api.nvim_set_keymap('n', '<leader>fs', ':lua _G.open_in_finder()<CR>', { nor
 vim.keymap.set('n', '<leader>en', function()
   vim.diagnostic.goto_next({float = false})
 end, { noremap = true, silent = true, desc = "Go to next diagnostic without float" })
+
+vim.keymap.set("n", "<leader>x", ":%bd!|e#|bd#<CR>", { noremap = true, silent = true }) -- Close all buffers except current
 
 vim.keymap.set("n", "gd", ":Lspsaga peek_definition<CR>", {noremap=true, silent=true})
 vim.keymap.set("n", "gt", ":Lspsaga hover_doc<CR>", {noremap=true, silent=true})
