@@ -13,11 +13,10 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +4 mesos/services/comms-dashboard/dashboards/slos.dashboard.py
-badd +6 mesos/services/ritmo/conf/server/prod.conf
+badd +69 mesos/services/pike/conf/fcm-worker/prod.conf
 argglobal
 %argdel
-edit mesos/services/ritmo/conf/server/prod.conf
+edit mesos/services/pike/conf/fcm-worker/prod.conf
 argglobal
 setlocal fdm=manual
 setlocal fde=0
@@ -29,12 +28,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 6 - ((5 * winheight(0) + 50) / 101)
+let s:l = 68 - ((52 * winheight(0) + 39) / 79)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 6
-normal! 0108|
+keepjumps 68
+normal! 011|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
@@ -48,6 +47,7 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
+nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :
