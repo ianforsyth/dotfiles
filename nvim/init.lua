@@ -32,6 +32,18 @@ vim.opt.rtp:prepend(lazypath)
 -- Check out: https://github.com/hrsh7th/nvim-cmp
 
 require("lazy").setup({
+  "almo7aya/openingh.nvim",
+  {
+    'simonmclean/triptych.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function()
+      require 'triptych'.setup()
+    end
+  },
   {
     'numToStr/Comment.nvim',
     opts = {},
@@ -103,6 +115,7 @@ require("lazy").setup({
           "markdown", 
           "markdown_inline", 
           "scala",
+          "thrift"
         },
         highlight = {
           enable = true,
@@ -347,12 +360,17 @@ vim.api.nvim_set_keymap('n', '<leader>fd', ':lua _G.delete_current_file()<CR>', 
 vim.api.nvim_set_keymap('n', '<leader>fn', ':lua _G.create_and_open_file()<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>fs', ':lua _G.open_in_finder()<CR>', { noremap = true, silent = true })
 
+vim.api.nvim_set_keymap('n', '<leader>fe', ':Triptych<CR>', { noremap = true, silent = true })
+
 vim.keymap.set('n', '<leader>en', function()
   vim.diagnostic.goto_next({float = false})
 end, { noremap = true, silent = true, desc = "Go to next diagnostic without float" })
 
+
 vim.keymap.set("n", "<leader>x", ":%bd!|e#|bd#<CR>", { noremap = true, silent = true }) -- Close all buffers except current
 
+vim.keymap.set({"n", "v"}, "gh", ":OpenInGHFileLines!<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "gf", ":Lspsaga finder<CR>", {noremap=true, silent=true})
 vim.keymap.set("n", "gd", ":Lspsaga peek_definition<CR>", {noremap=true, silent=true})
 vim.keymap.set("n", "gt", ":Lspsaga hover_doc<CR>", {noremap=true, silent=true})
 vim.keymap.set({'n','t'}, '<C-\\>', '<cmd>Lspsaga term_toggle<CR>', { noremap = true })
@@ -373,7 +391,7 @@ local options = {
   expandtab = true,                        -- convert tabs to spaces
   shiftwidth = 2,                          -- the number of spaces inserted for each indentation
   tabstop = 2,                             -- insert 2 spaces for a tab
-  -- swapfile = false,                        -- prevents a swapfile
+  swapfile = false,                        -- prevents a swapfile
   termguicolors = true,                    -- set term gui colors (most terminals support this)
   -- timeoutlen = 1000,                       -- time to wait for a mapped sequence to complete (in milliseconds)
   undofile = true,                         -- enable persistent undo

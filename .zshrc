@@ -14,6 +14,7 @@ alias e='nvim'
 alias profile='e ~/.zshrc'
 alias reload='source ~/.zshrc'
 alias envim='e ~/.config/nvim/'
+alias eworkspaces='e ~/workspace/dotfiles/nvim/workspaces'
 
 alias dotfiles='cd ~/workspace/dotfiles'
 
@@ -85,7 +86,6 @@ export GITHUB_PACKAGES_USERNAME=ianforsyth
 export PATH="/usr/local/opt/docker-credential-helpers/bin:$PATH"
 export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
 export PATH="$HOME/.canary-tools/bin:$PATH"
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
 export ANDROID_HOME=/Applications/Android\ Studio.app/sdk
 
