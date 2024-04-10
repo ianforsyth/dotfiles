@@ -3,7 +3,7 @@ let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd ~/workspace/strava/pike
+cd ~/workspace/strava/modoc
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -13,14 +13,10 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +56 pike-worker/src/main/scala/com/strava/pike/worker/fcm/FcmService.scala
-badd +39 pike-worker/src/main/scala/com/strava/pike/worker/FcmSender.scala
-badd +69 pike-worker/src/main/scala/com/strava/pike/worker/fcm/client/SendMessage.scala
-badd +44 pike-worker/src/main/scala/com/strava/pike/worker/PushNotificationDispatcher.scala
-badd +9 pike-worker/src/main/scala/com/strava/pike/worker/Configuration.scala
+badd +44 modoc-interface/src/main/thrift/modoc.thrift
 argglobal
 %argdel
-edit pike-worker/src/main/scala/com/strava/pike/worker/fcm/FcmService.scala
+edit modoc-interface/src/main/thrift/modoc.thrift
 argglobal
 setlocal fdm=manual
 setlocal fde=0
@@ -32,12 +28,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 210 - ((89 * winheight(0) + 51) / 102)
+let s:l = 44 - ((43 * winheight(0) + 50) / 101)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 210
-normal! 017|
+keepjumps 44
+normal! 05|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
