@@ -32,6 +32,8 @@ vim.opt.rtp:prepend(lazypath)
 -- Check out: https://github.com/hrsh7th/nvim-cmp
 
 require("lazy").setup({
+  'voldikss/vim-floaterm',
+  'vim-test/vim-test',
   "almo7aya/openingh.nvim",
   {
     'simonmclean/triptych.nvim',
@@ -373,7 +375,13 @@ vim.keymap.set({"n", "v"}, "gh", ":OpenInGHFileLines!<CR>", { noremap = true, si
 vim.keymap.set("n", "gf", ":Lspsaga finder<CR>", {noremap=true, silent=true})
 vim.keymap.set("n", "gd", ":Lspsaga peek_definition<CR>", {noremap=true, silent=true})
 vim.keymap.set("n", "gt", ":Lspsaga hover_doc<CR>", {noremap=true, silent=true})
-vim.keymap.set({'n','t'}, '<C-\\>', '<cmd>Lspsaga term_toggle<CR>', { noremap = true })
+
+vim.keymap.set('n', '<C-\\>', ':FloatermToggle<CR>', { noremap = true })
+vim.keymap.set('t', '<C-\\>', '<C-\\><C-n>:FloatermToggle<CR>', { noremap = true })
+
+vim.keymap.set('n', 'tl', ":TestLast<CR>", { noremap = true, silent = true })
+vim.keymap.set('n', 'tf', ":TestFile<CR>", { noremap = true, silent = true })
+vim.keymap.set('n', 'ts', ":TestSuite<CR>", { noremap = true, silent = true })
 
 -- Navigate buffers
 vim.keymap.set("n", "<C-l>", ":bnext<CR>", { noremap = true, silent = true, desc = "Next buffer"})
