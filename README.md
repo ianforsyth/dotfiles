@@ -1,8 +1,8 @@
 # Dotfiles
 
 ## On a new machine
-- Run `cd Desktop & touch setup.sh`
-- Copy contents of setup.sh into that file
-- Fix permissions with `chmod +x setup.sh`
+- Follow the [instructions here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) to get an ssh key for github
+- Run `mkdir ~/workspace & cd ~/workspace`
+- Run `git clone git@github.com:ianforsyth/dotfiles.git`
+- Run `cd dotfiles`
 - Run `./setup.sh`
-- Restart macbook for system ui preferences to work
