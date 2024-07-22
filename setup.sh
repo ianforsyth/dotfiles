@@ -44,6 +44,7 @@ brew install --cask google-chrome
 brew install --cask iterm2
 brew install --cask slack
 brew install --cask spotify
+brew install --cask 1password
 
 echo "Creating basic directories..."
 mkdir ~/stuff
