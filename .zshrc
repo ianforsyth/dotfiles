@@ -38,6 +38,7 @@ alias ritmo='cd ~/workspace/strava/ritmo'
 alias pike='cd ~/workspace/strava/pike'
 
 alias fmt='sbt scalafmtAll'
+alias ghp="gh workflow run ci.yml --ref \$(git branch --show-current) --field ci-hook='publish-image'"
 # --------------------
 
 alias pr='open "https://github.com/strava/${PWD##*/}/compare/$(git symbolic-ref --short -q HEAD)?expand=1"'

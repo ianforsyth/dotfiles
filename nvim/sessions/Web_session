@@ -13,9 +13,11 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +13 packages/comms-ui/src/comms/commsUtils.ts
-badd +47 packages/comms-ui/src/comms/CommsTable/CommsTable.tsx
-badd +21 packages/ui/DataTable/DataTable.mdx
+badd +21 packages/comms-ui/src/comms/commsUtils.ts
+badd +41 packages/comms-ui/src/comms/CommsTable/CommsTable.tsx
+badd +7 packages/comms-ui/src/comm-discard-reasons/CommDiscardReasonsTable/CommDiscardReasonsTable.tsx
+badd +33 packages/comms-ui/src/comms/commTypes.ts
+badd +3 packages/comms-ui/src/comm-discard-reasons/commDiscardReasonTypes.ts
 argglobal
 %argdel
 edit packages/comms-ui/src/comms/commsUtils.ts
@@ -31,12 +33,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 13 - ((12 * winheight(0) + 39) / 78)
+let s:l = 22 - ((21 * winheight(0) + 39) / 78)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 13
-normal! 052|
+keepjumps 22
+normal! 0
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
@@ -50,6 +52,7 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
+nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

@@ -13,15 +13,17 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +67 bullhorn-spark/src/main/scala/com/strava/bullhorn/spark/BaseBullhornJob.scala
-badd +57 bullhorn-spark/src/main/scala/com/strava/bullhorn/spark/RouteRecommendationNotificationJob.scala
-badd +48 bullhorn-spark/src/test/scala/com/strava/bullhorn/spark/RouteRecommendationNotificationJobImplSpec.scala
-badd +33 bullhorn-server/src/main/scala/com/strava/bullhorn/server/util/notificationformatter/BestEffortWauWinbackNotificationFormatter.scala
+badd +5 bullhorn-spark/src/main/scala/com/strava/bullhorn/spark/BaseBullhornJob.scala
+badd +216 bullhorn-spark/src/main/scala/com/strava/bullhorn/spark/ActivityLookbackWauNotificationJob.scala
+badd +103 bullhorn-spark/src/main/scala/com/strava/bullhorn/spark/UploadReminderWauNotificationJob.scala
+badd +11 bullhorn-server/src/main/resources/reference.conf
+badd +48 bullhorn-spark/src/main/scala/com/strava/bullhorn/spark/TrialLossAversionNotificationJob.scala
+badd +36 bullhorn-spark/src/test/scala/com/strava/bullhorn/spark/WauWinbackKudosableActivityNotificationJobSpec.scala
 argglobal
 %argdel
-edit bullhorn-spark/src/test/scala/com/strava/bullhorn/spark/RouteRecommendationNotificationJobImplSpec.scala
+edit bullhorn-spark/src/test/scala/com/strava/bullhorn/spark/WauWinbackKudosableActivityNotificationJobSpec.scala
 argglobal
-balt bullhorn-server/src/main/scala/com/strava/bullhorn/server/util/notificationformatter/BestEffortWauWinbackNotificationFormatter.scala
+balt bullhorn-spark/src/main/scala/com/strava/bullhorn/spark/BaseBullhornJob.scala
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -32,12 +34,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 48 - ((47 * winheight(0) + 50) / 100)
+let s:l = 36 - ((35 * winheight(0) + 51) / 102)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 48
-normal! 02|
+keepjumps 36
+normal! 0
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

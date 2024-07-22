@@ -15,6 +15,7 @@
   rim = rebase -i main
   wip = !git add -A && git commit --no-verify -m "WIP"
   nah = !git add . && git reset --hard HEAD
+  last = rev-parse --verify HEAD
 [url "ssh://git@github.com/"]
   insteadOf = https://github.com/
 [filter "media"]

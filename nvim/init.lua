@@ -32,6 +32,63 @@ vim.opt.rtp:prepend(lazypath)
 -- Check out: https://github.com/hrsh7th/nvim-cmp
 
 require("lazy").setup({
+  {
+    "hrsh7th/nvim-cmp",
+    event = "InsertEnter", -- Lazy-load on entering insert mode
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
+      "hrsh7th/cmp-buffer",   -- Buffer source for nvim-cmp
+      "hrsh7th/cmp-path",     -- Path source for nvim-cmp
+      "saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
+      "L3MON4D3/LuaSnip",     -- Snippet engine
+      "rafamadriz/friendly-snippets", -- A collection of snippets for multiple languages
+    },
+    config = function()
+      -- Basic nvim-cmp setup
+      local cmp = require("cmp")
+      local luasnip = require("luasnip")
+
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ['<C-b>'] = cmp.mapping.scroll_docs(-1),
+          ['<C-f>'] = cmp.mapping.scroll_docs(1),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.abort(),
+          ['<Tab>'] = cmp.mapping.confirm({ select = true }),
+        }),
+        sources = cmp.config.sources({
+          { name = 'nvim_lsp' },
+          { name = 'luasnip' },
+        }, {
+          { name = 'buffer' },
+          { name = 'path' }
+        })
+      })
+
+      -- Use buffer source for `/` (searching) and `:` (commands)
+      cmp.setup.cmdline('/', {
+        sources = {
+          { name = 'buffer' }
+        }
+      })
+
+      cmp.setup.cmdline(':', {
+        sources = cmp.config.sources({
+          { name = 'path' }
+        }, {
+          { name = 'cmdline' }
+        })
+      })
+
+      -- Setup LuaSnip
+      require("luasnip.loaders.from_vscode").lazy_load()
+    end
+  },
   'voldikss/vim-floaterm',
   'vim-test/vim-test',
   "almo7aya/openingh.nvim",
@@ -43,7 +100,11 @@ require("lazy").setup({
       'nvim-tree/nvim-web-devicons',
     },
     config = function()
-      require 'triptych'.setup()
+      require 'triptych'.setup({
+        options = {
+          show_hidden = true
+        }
+      })
     end
   },
   {
@@ -376,9 +437,10 @@ vim.keymap.set("n", "gf", ":Lspsaga finder<CR>", {noremap=true, silent=true})
 vim.keymap.set("n", "gd", ":Lspsaga peek_definition<CR>", {noremap=true, silent=true})
 vim.keymap.set("n", "gt", ":Lspsaga hover_doc<CR>", {noremap=true, silent=true})
 
-vim.keymap.set('n', '<C-\\>', ':FloatermToggle<CR>', { noremap = true })
-vim.keymap.set('t', '<C-\\>', '<C-\\><C-n>:FloatermToggle<CR>', { noremap = true })
+vim.keymap.set('n', '<C-\\>', ':FloatermToggle<CR>', { noremap = true, silent = true })
+vim.keymap.set('t', '<C-\\>', '<C-\\><C-n>:FloatermToggle<CR>', { noremap = true, silent = true })
 
+vim.keymap.set('n', 'tn', ":TestNearest<CR>", { noremap = true, silent = true })
 vim.keymap.set('n', 'tl', ":TestLast<CR>", { noremap = true, silent = true })
 vim.keymap.set('n', 'tf', ":TestFile<CR>", { noremap = true, silent = true })
 vim.keymap.set('n', 'ts', ":TestSuite<CR>", { noremap = true, silent = true })
