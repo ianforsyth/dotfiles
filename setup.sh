@@ -39,6 +39,7 @@ fi
 
 echo 'Installing homebrew applications...'
 brew install git
+brew install asdf
 brew install --cask google-chrome
 brew install --cask iterm2
 brew install --cask slack
