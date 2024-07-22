@@ -1,22 +1,50 @@
 #!/bin/zsh
 
-# Remove everything from dock and hide it
+echo "Starting setup..."
+
+echo "Removing everthing from macbook dock and autohiding..."
 defaults write com.apple.dock persistent-apps -array
 defaults write com.apple.dock persistent-others -array
 defaults write com.apple.dock autohide -bool true
 killall Dock
 
-# Enable natural scrolling, disable two finger right click, disable swipe navigation
+echo "Enabling natural scrolling"
+
+echo "Disabling two finger right click..."
+
+echo "Disabling swipe navigation..."
 defaults write -g com.apple.swipescrolldirection -bool true
 defaults write com.apple.AppleMultitouchTrackpad TrackpadRightClick -bool false
 defaults write -g AppleEnableSwipeNavigateWithScrolls -bool false
 
+echo 'Turning keyboard repeat up and keyboard delay down'
+defaults write -g InitialKeyRepeat -int 10 
+defaults write -g KeyRepeat -int 1
+
+echo 'Restarting system ui for preferences to take hold...'
 killall SystemUIServer
 
-# Map caps-lock to ctrl
+echo "Mapping caps lock to control..."
 hidutil property --set '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x7000000E0}]}'
 
-# Create basic directories
+if ! command -v brew &> /dev/null
+then
+    echo "Homebrew not found. Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+    echo "Homebrew found. Updating and upgrading..."
+    brew update
+    brew upgrade
+fi
+
+echo 'Installing homebrew applications...'
+brew install git
+brew install --cask google-chrome
+brew install --cask iterm2
+brew install --cask slack
+brew install --cask spotify
+
+echo "Creating basic directories..."
 mkdir ~/stuff
 mkdir ~/workspace
 
