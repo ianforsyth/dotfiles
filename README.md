@@ -1,4 +1,8 @@
 # Dotfiles
-When setting up a new machine run `./setup.sh`
 
-If you get a permission error (haven't tried on a new machine yet) `sudo chmod +x setup.sh`
+## On a new machine
+- Run `cd Desktop & touch setup.sh`
+- Copy contents of setup.sh into that file
+- Fix permissions with `chmod +x setup.sh`
+- Run `./setup.sh`
+- Restart macbook for system ui preferences to work
