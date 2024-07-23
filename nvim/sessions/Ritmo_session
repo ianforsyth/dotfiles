@@ -13,15 +13,15 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +58 ritmo-server/src/main/scala/com/strava/ritmo/server/Server.scala
-badd +488 ritmo-server/src/main/scala/com/strava/ritmo/server/RitmoImpl.scala
-badd +48 ritmo-server/src/test/scala/com/strava/ritmo/server/RitmoImplSpec.scala
-badd +16 ritmo-server/src/main/scala/com/strava/ritmo/server/services/PromotionCache.scala
+badd +50 ritmo-server/src/main/scala/com/strava/ritmo/server/Server.scala
+badd +296 ritmo-server/src/main/scala/com/strava/ritmo/server/RitmoImpl.scala
+badd +63 ritmo-server/src/test/scala/com/strava/ritmo/server/RitmoImplSpec.scala
+badd +186 ritmo-interface/src/main/thrift/ritmo.thrift
 argglobal
 %argdel
 edit ritmo-server/src/main/scala/com/strava/ritmo/server/RitmoImpl.scala
 argglobal
-balt ritmo-server/src/main/scala/com/strava/ritmo/server/Server.scala
+balt ritmo-server/src/test/scala/com/strava/ritmo/server/RitmoImplSpec.scala
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -32,12 +32,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 488 - ((73 * winheight(0) + 50) / 100)
+let s:l = 296 - ((48 * winheight(0) + 50) / 100)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 488
-normal! 018|
+keepjumps 296
+normal! 036|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
@@ -51,7 +51,6 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :
