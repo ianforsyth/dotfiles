@@ -18,7 +18,9 @@ alias eworkspaces='e ~/workspace/dotfiles/nvim/workspaces'
 
 alias dotfiles='cd ~/workspace/dotfiles'
 
+alias base='cd ~/workspace/gambit'
 alias base='cd ~/workspace/base'
+alias hoahq='cd ~/workspace/hoahq'
 alias fs='foreman start'
 
 # Strava specific -------------------------

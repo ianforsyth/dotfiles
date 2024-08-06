@@ -14,10 +14,16 @@ else
   set shortmess=aoO
 endif
 badd +44 modoc-interface/src/main/thrift/modoc.thrift
+badd +69 build.sbt
+badd +8 modoc-consumer/src/main/scala/com/strava/modoc/consumer/Server.scala
+badd +10 modoc-consumer/src/main/scala/com/strava/modoc/consumer/SubscriptionChangeHandler.scala
+badd +18 modoc-consumer/src/test/scala/com/strava/modoc/consumer/SubscriptionChangeHandlerSpec.scala
+badd +1 COMMONS_VERSION
 argglobal
 %argdel
-edit modoc-interface/src/main/thrift/modoc.thrift
+edit modoc-consumer/src/test/scala/com/strava/modoc/consumer/SubscriptionChangeHandlerSpec.scala
 argglobal
+balt COMMONS_VERSION
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -28,12 +34,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 44 - ((43 * winheight(0) + 50) / 101)
+let s:l = 18 - ((17 * winheight(0) + 50) / 100)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 44
-normal! 05|
+keepjumps 18
+normal! 08|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
