@@ -13,17 +13,21 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +5 bullhorn-spark/src/main/scala/com/strava/bullhorn/spark/BaseBullhornJob.scala
-badd +216 bullhorn-spark/src/main/scala/com/strava/bullhorn/spark/ActivityLookbackWauNotificationJob.scala
-badd +103 bullhorn-spark/src/main/scala/com/strava/bullhorn/spark/UploadReminderWauNotificationJob.scala
-badd +11 bullhorn-server/src/main/resources/reference.conf
-badd +48 bullhorn-spark/src/main/scala/com/strava/bullhorn/spark/TrialLossAversionNotificationJob.scala
-badd +36 bullhorn-spark/src/test/scala/com/strava/bullhorn/spark/WauWinbackKudosableActivityNotificationJobSpec.scala
+badd +36 bullhorn-spark/src/main/scala/com/strava/bullhorn/spark/BaseBullhornJob.scala
+badd +72 bullhorn-spark/src/test/scala/com/strava/bullhorn/spark/ActivityLookbackWauNotificationJobImplSpec.scala
+badd +264 bullhorn-spark/src/test/scala/com/strava/bullhorn/spark/UploadReminderWauNotificationJobImplSpec.scala
+badd +252 bullhorn-spark/src/test/scala/com/strava/bullhorn/spark/WauWinbackKudosableActivityNotificationJobSpec.scala
+badd +169 bullhorn-server/src/test/scala/com/strava/bullhorn/server/VideoEventHandlerSpec.scala
+badd +103 bullhorn-spark/src/test/scala/com/strava/bullhorn/spark/DeviceConnectReminderJobImplSpec.scala
+badd +601 bullhorn-server/src/test/scala/com/strava/bullhorn/server/events/GoalEventHandlerTestSpec.scala
+badd +171 bullhorn-spark/src/test/scala/com/strava/bullhorn/spark/GoalReminderJobImplSpec.scala
+badd +16 bullhorn-spark/src/test/scala/com/strava/bullhorn/spark/RouteRecommendationNotificationJobImplSpec.scala
+badd +6 bullhorn-spark/src/test/scala/com/strava/bullhorn/spark/SubscriberPerksJobSpec.scala
 argglobal
 %argdel
 edit bullhorn-spark/src/test/scala/com/strava/bullhorn/spark/WauWinbackKudosableActivityNotificationJobSpec.scala
 argglobal
-balt bullhorn-spark/src/main/scala/com/strava/bullhorn/spark/BaseBullhornJob.scala
+balt bullhorn-spark/src/test/scala/com/strava/bullhorn/spark/UploadReminderWauNotificationJobImplSpec.scala
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -34,12 +38,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 36 - ((35 * winheight(0) + 51) / 102)
+let s:l = 255 - ((30 * winheight(0) + 39) / 78)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 36
-normal! 0
+keepjumps 255
+normal! 03|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
@@ -53,6 +57,7 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
+nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

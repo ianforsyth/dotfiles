@@ -13,19 +13,16 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +91 app/src/App.tsx
-badd +129 app/src/layouts/Page.tsx
-badd +7 app/src/App.css
-badd +7 app/index.html
-badd +19 app/tailwind.config.js
-badd +1 app/src/styles/index.scss
-badd +14 app/vite.config.ts
-badd +8 app/package.json
+badd +17 app/src/pages/Documents.tsx
+badd +39 ~/workspace/base/app/src/components/CreateFolderModal.tsx
+badd +49 app/src/ui/Modal.tsx
+badd +44 app/src/api/folderApi.ts
+badd +58 ~/workspace/base/app/src/components/ConfirmModal.tsx
 argglobal
 %argdel
-edit app/package.json
+edit app/src/pages/Documents.tsx
 argglobal
-balt app/vite.config.ts
+balt app/src/api/folderApi.ts
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -36,12 +33,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 8 - ((7 * winheight(0) + 50) / 101)
+let s:l = 71 - ((70 * winheight(0) + 50) / 101)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 8
-normal! 02|
+keepjumps 71
+normal! 04|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

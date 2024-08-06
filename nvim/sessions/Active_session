@@ -13,14 +13,20 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 lib/strava/metering/service/reader.rb
-badd +1 lib/views/admin/impressions/show.rb
-badd +18 app/views/admin/impressions/show.haml
+badd +57 lib/strava/metering/service/reader.rb
+badd +140 spec/lib/strava/metering/service/reader_spec.rb
 argglobal
 %argdel
-edit lib/strava/metering/service/reader.rb
+edit spec/lib/strava/metering/service/reader_spec.rb
+wincmd t
+let s:save_winminheight = &winminheight
+let s:save_winminwidth = &winminwidth
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
 argglobal
-balt app/views/admin/impressions/show.haml
+balt lib/strava/metering/service/reader.rb
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -31,12 +37,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 127 - ((83 * winheight(0) + 50) / 100)
+let s:l = 140 - ((69 * winheight(0) + 39) / 78)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 127
-normal! 015|
+keepjumps 140
+normal! 018|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
@@ -44,6 +50,8 @@ endif
 unlet! s:wipebuf
 set winheight=1 winwidth=20
 let &shortmess = s:shortmess_save
+let &winminheight = s:save_winminheight
+let &winminwidth = s:save_winminwidth
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)
