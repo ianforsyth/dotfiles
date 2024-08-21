@@ -274,6 +274,11 @@ require("lazy").setup({
         -- your on_attach function
       end
 
+      metals_config.settings = {
+        autoImportBuild = "all",
+        defaultBspToBuildTool = true,
+      }
+
       return metals_config
     end,
     config = function(self, metals_config)
@@ -286,6 +291,12 @@ require("lazy").setup({
         group = nvim_metals_group,
       })
     end
+  },
+  {
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      require('gitsigns').setup()
+    end,
   },
   {
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -453,7 +464,7 @@ vim.keymap.set("n", "<C-h>", ":bprev<CR>", { noremap = true, silent = true, desc
 -- OPTIONS
 ---------------------------------------------------------------------------------
 local options = {
-  backup = false,                          -- creates a backup file
+  backup = false,                          -- prevents backup files from being created
   hlsearch = true,                         -- highlight all matches on previous search pattern
   ignorecase = true,                       -- ignore case in search patterns
   smartcase = true,                        -- smart case
@@ -468,7 +479,7 @@ local options = {
   -- updatetime = 300,                        -- faster completion (4000ms default)
   cursorline = true,                       -- highlight the current line
   number = true,                           -- set numbered lines
-  -- signcolumn = "number",                   -- show signs over the top of line numbers
+  signcolumn = "number",                   -- show signs over the top of line numbers
   -- wrap = false,                            -- display lines as one long line
   scrolloff = 10,                           -- extra room below the end of a file
   -- guifont = "monospace:h17",               -- the font used in graphical neovim applications
