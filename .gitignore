@@ -1,13 +1,13 @@
 .byebug_history
-.session.vim
 .DS_Store
 
 .bloop
 .metals
 *metals.sbt
+*session.vim
 
 .vscode
-.tool-versions
+# .tool-versions
 
 # This is for local secrets within the dotfile repo
 .localsecrets
