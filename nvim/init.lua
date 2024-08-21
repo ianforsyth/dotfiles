@@ -496,7 +496,6 @@ local options = {
   cursorline = true,                       -- highlight the current line
   number = true,                           -- set numbered lines
   signcolumn = "number",                   -- show signs over the top of line numbers
-  -- wrap = false,                            -- display lines as one long line
   scrolloff = 10,                           -- extra room below the end of a file
   -- guifont = "monospace:h17",               -- the font used in graphical neovim applications
 }
