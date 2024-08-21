@@ -26,14 +26,30 @@ vim.opt.rtp:prepend(lazypath)
 ---------------------------------------------------------------------------------
 -- PLUGINS
 ---------------------------------------------------------------------------------
-
--- Check out: https://github.com/easymotion/vim-easymotion
--- Check out: https://github.com/pocco81/auto-save.nvim
--- Check out: https://github.com/hrsh7th/nvim-cmp
+local plugins = {
+  cmp = "hrsh7th/nvim-cmp",
+  floaterm = "voldikss/vim-floaterm",
+  vim_test = "vim-test/vim-test",
+  openingh = "almo7aya/openingh.nvim",
+  triptych = "simonmclean/triptych.nvim",
+  comment = "numToStr/Comment.nvim",
+  dashboard = "nvimdev/dashboard-nvim",
+  sessions = "natecraddock/sessions.nvim",
+  workspaces = "natecraddock/workspaces.nvim",
+  lspconfig = "neovim/nvim-lspconfig",
+  treesitter = "nvim-treesitter/nvim-treesitter",
+  lspsaga = "nvimdev/lspsaga.nvim",
+  bufferline = "akinsho/bufferline.nvim",
+  telescope = "nvim-telescope/telescope.nvim",
+  gruvbox = "ellisonleao/gruvbox.nvim",
+  metals = "scalameta/nvim-metals",
+  gitsigns = "lewis6991/gitsigns.nvim",
+  lsp_lines = "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
+}
 
 require("lazy").setup({
   {
-    "hrsh7th/nvim-cmp",
+    plugins.cmp,
     event = "InsertEnter", -- Lazy-load on entering insert mode
     dependencies = {
       "hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
@@ -89,11 +105,11 @@ require("lazy").setup({
       require("luasnip.loaders.from_vscode").lazy_load()
     end
   },
-  'voldikss/vim-floaterm',
-  'vim-test/vim-test',
-  "almo7aya/openingh.nvim",
+  plugins.floaterm,
+  plugins.vim_test,
+  plugins.openingh,
   {
-    'simonmclean/triptych.nvim',
+    plugins.triptych,
     event = 'VeryLazy',
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -108,12 +124,12 @@ require("lazy").setup({
     end
   },
   {
-    'numToStr/Comment.nvim',
+    plugins.comment,
     opts = {},
     lazy = false,
   },
   {
-    'nvimdev/dashboard-nvim',
+    plugins.dashboard,
     event = 'VimEnter',
     config = function()
       require('dashboard').setup {
@@ -123,13 +139,13 @@ require("lazy").setup({
     dependencies = { {'nvim-tree/nvim-web-devicons'}}
   },
   {
-    "natecraddock/sessions.nvim",
+    plugins.sessions,
     config = function()
       require("sessions").setup()
     end
   },
   {
-    "natecraddock/workspaces.nvim",
+    plugins.workspaces,
     config = function()
       local sessions = require("sessions")
       -- IF (4/3/24) Needed to find the path to the symlinked directory
@@ -158,7 +174,7 @@ require("lazy").setup({
     end
   },
   {
-    "neovim/nvim-lspconfig",
+    plugins.lspconfig,
     config = function()
       require'lspconfig'.tsserver.setup{} -- Typescript
       require'lspconfig'.solargraph.setup{} -- Ruby
@@ -169,7 +185,7 @@ require("lazy").setup({
     end
   },
   {
-    "nvim-treesitter/nvim-treesitter",
+    plugins.treesitter,
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup {
@@ -187,7 +203,7 @@ require("lazy").setup({
     end,
   },
   {
-    'nvimdev/lspsaga.nvim',
+    plugins.lspsaga,
     dependencies = {
         'nvim-treesitter/nvim-treesitter',
         'nvim-tree/nvim-web-devicons'    
@@ -206,7 +222,7 @@ require("lazy").setup({
     end
   },
   {
-    'akinsho/bufferline.nvim', 
+    plugins.bufferline, 
     version = "*", 
     dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
@@ -219,7 +235,7 @@ require("lazy").setup({
     end
   },
   {
-    'nvim-telescope/telescope.nvim',
+    plugins.telescope,
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
       require('telescope').setup{
@@ -231,7 +247,7 @@ require("lazy").setup({
     end
   },
   { 
-    "ellisonleao/gruvbox.nvim", 
+    plugins.gruvbox, 
     priority = 1000 , 
     -- TODO (4/1/24): Go through these config options and remove unused/unwanted ones
     config = function()
@@ -263,7 +279,7 @@ require("lazy").setup({
     end
   },
   {
-    "scalameta/nvim-metals",
+    plugins.metals,
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -293,13 +309,13 @@ require("lazy").setup({
     end
   },
   {
-    "lewis6991/gitsigns.nvim",
+    plugins.gitsigns,
     config = function()
       require('gitsigns').setup()
     end,
   },
   {
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    plugins.lsp_lines,
     config = function()
       require("lsp_lines").setup()
     end,
