@@ -144,7 +144,7 @@ require("lazy").setup({
           end,
           open = function()
             local current_workspace = require("workspaces").name()
-            local session_path = config_path .. "/sessions/" .. current_workspace .. "_session"
+            local session_path = config_path .. "/sessions/" .. current_workspace .. "_session.vim"
 
             if vim.loop.fs_stat(session_path) then
               sessions.load(session_path)
