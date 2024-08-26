@@ -44,23 +44,30 @@ local plugins = {
   gruvbox = "ellisonleao/gruvbox.nvim",
   metals = "scalameta/nvim-metals",
   gitsigns = "lewis6991/gitsigns.nvim",
-  lsp_lines = "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
+  lsp_lines = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  snippets = "L3MON4D3/LuaSnip", 
+  cmp_snippets = "saadparwaiz1/cmp_luasnip", 
 }
 
 require("lazy").setup({
   {
+    plugins.comment,
+    config = function()
+      require('Comment').setup()
+    end,
+  },
+  {
     plugins.cmp,
     event = "InsertEnter", -- Lazy-load on entering insert mode
     dependencies = {
+      plugins.snippets,
+      plugins.cmp_snippets,
       "hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
       "hrsh7th/cmp-buffer",   -- Buffer source for nvim-cmp
       "hrsh7th/cmp-path",     -- Path source for nvim-cmp
-      "saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
-      "L3MON4D3/LuaSnip",     -- Snippet engine
       "rafamadriz/friendly-snippets", -- A collection of snippets for multiple languages
     },
     config = function()
-      -- Basic nvim-cmp setup
       local cmp = require("cmp")
       local luasnip = require("luasnip")
 
@@ -86,23 +93,8 @@ require("lazy").setup({
         })
       })
 
-      -- Use buffer source for `/` (searching) and `:` (commands)
-      cmp.setup.cmdline('/', {
-        sources = {
-          { name = 'buffer' }
-        }
-      })
-
-      cmp.setup.cmdline(':', {
-        sources = cmp.config.sources({
-          { name = 'path' }
-        }, {
-          { name = 'cmdline' }
-        })
-      })
-
-      -- Setup LuaSnip
       require("luasnip.loaders.from_vscode").lazy_load()
+      require("snippets")
     end
   },
   plugins.floaterm,
@@ -122,11 +114,6 @@ require("lazy").setup({
         }
       })
     end
-  },
-  {
-    plugins.comment,
-    opts = {},
-    lazy = false,
   },
   {
     plugins.dashboard,
