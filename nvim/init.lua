@@ -414,6 +414,12 @@ vim.api.nvim_create_autocmd("FileChangedShellPost", {
   end,
 })
 
+-- IF (8/29/24): Remove trailing whitespace
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  command = "%s/\\s\\+$//e",
+})
+
 vim.diagnostic.config({
   virtual_text = false,
 })
