@@ -31,7 +31,7 @@ local plugins = {
   floaterm = "voldikss/vim-floaterm",
   vim_test = "vim-test/vim-test",
   openingh = "almo7aya/openingh.nvim",
-  triptych = "simonmclean/triptych.nvim",
+  explorer = "simonmclean/triptych.nvim",
   comment = "numToStr/Comment.nvim",
   dashboard = "nvimdev/dashboard-nvim",
   sessions = "natecraddock/sessions.nvim",
@@ -45,8 +45,8 @@ local plugins = {
   metals = "scalameta/nvim-metals",
   gitsigns = "lewis6991/gitsigns.nvim",
   lsp_lines = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-  snippets = "L3MON4D3/LuaSnip", 
-  cmp_snippets = "saadparwaiz1/cmp_luasnip", 
+  snippets = "L3MON4D3/LuaSnip",
+  cmp_snippets = "saadparwaiz1/cmp_luasnip",
 }
 
 require("lazy").setup({
@@ -98,10 +98,16 @@ require("lazy").setup({
     end
   },
   plugins.floaterm,
-  plugins.vim_test,
+  {
+    plugins.vim_test,
+    config = function()
+      vim.g["test#strategy"] = "neovim"
+      vim.g["test#neovim#start_normal"] = 1
+    end,
+  },
   plugins.openingh,
   {
-    plugins.triptych,
+    plugins.explorer,
     event = 'VeryLazy',
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -176,10 +182,10 @@ require("lazy").setup({
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup {
-        ensure_installed = { 
+        ensure_installed = {
           "lua",
-          "markdown", 
-          "markdown_inline", 
+          "markdown",
+          "markdown_inline",
           "scala",
           "thrift"
         },
@@ -193,7 +199,7 @@ require("lazy").setup({
     plugins.lspsaga,
     dependencies = {
         'nvim-treesitter/nvim-treesitter',
-        'nvim-tree/nvim-web-devicons'    
+        'nvim-tree/nvim-web-devicons'
     },
     config = function()
       require('lspsaga').setup({
@@ -203,14 +209,14 @@ require("lazy").setup({
           }
         },
         lightbulb = {
-          enable = false 
+          enable = false
         }
       })
     end
   },
   {
-    plugins.bufferline, 
-    version = "*", 
+    plugins.bufferline,
+    version = "*",
     dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
       require('bufferline').setup({
@@ -233,9 +239,9 @@ require("lazy").setup({
       }
     end
   },
-  { 
-    plugins.gruvbox, 
-    priority = 1000 , 
+  {
+    plugins.gruvbox,
+    priority = 1000 ,
     -- TODO (4/1/24): Go through these config options and remove unused/unwanted ones
     config = function()
       require("gruvbox").setup({
@@ -456,6 +462,7 @@ vim.keymap.set({"n", "v"}, "gh", ":OpenInGHFileLines!<CR>", { noremap = true, si
 vim.keymap.set("n", "gf", ":Lspsaga finder<CR>", {noremap=true, silent=true})
 vim.keymap.set("n", "gd", ":Lspsaga peek_definition<CR>", {noremap=true, silent=true})
 vim.keymap.set("n", "gt", ":Lspsaga hover_doc<CR>", {noremap=true, silent=true})
+vim.keymap.set("n", "ga", ":Lspsaga code_action<CR>", {noremap=true, silent=true})
 
 vim.keymap.set('n', '<C-\\>', ':FloatermToggle<CR>', { noremap = true, silent = true })
 vim.keymap.set('t', '<C-\\>', '<C-\\><C-n>:FloatermToggle<CR>', { noremap = true, silent = true })
