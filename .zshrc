@@ -18,8 +18,10 @@ alias eworkspaces='e ~/workspace/dotfiles/nvim/workspaces'
 
 alias dotfiles='cd ~/workspace/dotfiles'
 
-alias base='cd ~/workspace/gambit'
+alias gambit='cd ~/workspace/gambit'
 alias base='cd ~/workspace/base'
+alias app='cd ~/workspace/base/app'
+alias api='cd ~/workspace/base/api'
 alias hoahq='cd ~/workspace/hoahq'
 alias fs='foreman start'
 
@@ -37,20 +39,18 @@ alias erasure='cd ~/workspace/strava/erasure'
 alias features='cd ~/workspace/strava/features'
 alias malheur='cd ~/workspace/strava/malheur'
 alias ritmo='cd ~/workspace/strava/ritmo'
+alias xelnaga='cd ~/workspace/strava/xelnaga'
 alias pike='cd ~/workspace/strava/pike'
 
 alias fmt='sbt scalafmtAll'
 alias ghp="gh workflow run ci.yml --ref \$(git branch --show-current) --field ci-hook='publish-image'"
+alias ghd="gh workflow run ci.yml --ref \$(git branch --show-current) --field ci-hook='deploy-canary'"
 # --------------------
 
 alias pr='open "https://github.com/strava/${PWD##*/}/compare/$(git symbolic-ref --short -q HEAD)?expand=1"'
 
 alias psg='~/workspace/strava/configuration/mesos/tools/paasage'
 alias graphage='~/workspace/strava/configuration/mesos/tools/graphage'
-
-# --------------------
-alias api='docker-compose exec api sh'
-alias app='docker-compose exec app sh'
 
 # --------------------
 
@@ -82,7 +82,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export APOLLO_KEY="user:po.strava.iforsyth@strava.com:I3eYIJAd8IxSKIW7qgz5SA"
+export APOLLO_KEY="user:po.strava.iforsyth@strava.com:IzIqAYhVKAmB1tRLIeuDCg"
 
 export GITHUB_PACKAGES_USERNAME=ianforsyth
 
@@ -93,3 +93,4 @@ export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
 export ANDROID_HOME=/Applications/Android\ Studio.app/sdk
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
+export PATH="$HOME/.canary-tools/bin:$PATH"
