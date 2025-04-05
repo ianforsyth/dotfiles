@@ -50,6 +50,7 @@ brew install --cask google-drive
 brew install --cask slack
 brew install --cask spotify
 brew install --cask 1password
+brew install --cask rectangle-pro
 
 echo "Creating basic directories..."
 mkdir ~/stuff
