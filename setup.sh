@@ -56,6 +56,7 @@ brew install --cask spotify
 brew install --cask 1password
 brew install --cask rectangle-pro
 brew install --cask obsidian
+brew install --cask todoist
 
 echo "Creating basic directories..."
 mkdir ~/stuff
