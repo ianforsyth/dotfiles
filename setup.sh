@@ -8,10 +8,13 @@ defaults write com.apple.dock persistent-others -array
 defaults write com.apple.dock autohide -bool true
 killall Dock
 
-echo "Enabling natural scrolling"
+echo "Enabling natural scrolling..."
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
 echo "Disabling two finger right click..."
+
+echo "Enable tap to click..."
+defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
 
 echo "Disabling swipe navigation..."
 defaults write -g com.apple.swipescrolldirection -bool true
