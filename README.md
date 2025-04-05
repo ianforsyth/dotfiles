@@ -6,3 +6,4 @@
 - Run `git clone git@github.com:ianforsyth/dotfiles.git`
 - Run `cd dotfiles`
 - Run `./setup.sh`
+- Restart for all new settings to take effect
