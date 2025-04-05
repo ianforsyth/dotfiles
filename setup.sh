@@ -31,6 +31,11 @@ if ! command -v brew &> /dev/null
 then
     echo "Homebrew not found. Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # Commands required by brew post-install
+    echo >> /Users/ianforsyth/.zprofile
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/ianforsyth/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 else
     echo "Homebrew found. Updating and upgrading..."
     brew update
