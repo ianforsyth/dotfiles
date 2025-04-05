@@ -28,8 +28,9 @@ defaults write -g KeyRepeat -int 1
 echo 'Restarting system ui for preferences to take hold...'
 killall SystemUIServer
 
-echo "Mapping caps lock to control..."
-hidutil property --set '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x7000000E0}]}'
+# This is getting overwritten on every reboot - just suggesting setting it manually for now
+# echo "Mapping caps lock to control..."
+# hidutil property --set '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x7000000E0}]}'
 
 if ! command -v brew &> /dev/null
 then
