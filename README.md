@@ -9,7 +9,8 @@
 - Restart for all new settings to take effect
 
 ## Manual settings changes
-- Mac → System Settings → Displays → More Space
+- Change resolution: Mac → System Settings → Displays → More Space
+- Map caps lock to ctrl: Mac → System Settings → Keyboard → Keyboard → Shortcuts → Modifier Keys
 
 ## Manual app setup
 - Import profile to iTerm2
