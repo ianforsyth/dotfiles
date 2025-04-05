@@ -9,6 +9,7 @@ defaults write com.apple.dock autohide -bool true
 killall Dock
 
 echo "Enabling natural scrolling"
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
 echo "Disabling two finger right click..."
 
