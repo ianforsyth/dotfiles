@@ -47,9 +47,15 @@ else
     brew upgrade
 fi
 
-echo 'Installing homebrew applications...'
+echo 'Installing homebrew utils...'
 brew install git
 brew install asdf
+
+# Needed for yarn
+brew install gnu-tar 
+brew install gnupg
+
+echo 'Installing homebrew applications...'
 brew install --cask vivaldi
 brew install --cask google-drive
 brew install --cask slack
@@ -58,6 +64,15 @@ brew install --cask 1password
 brew install --cask rectangle-pro
 brew install --cask obsidian
 brew install --cask todoist
+
+echo "Installing asdf plugins..."
+asdf plugin add nodejs
+asdf install nodejs latest
+asdf set nodejs $(asdf list nodejs | tail -1)
+
+asdf plugin add yarn
+asdf install yarn latest
+asdf set yarn $(asdf list yarn | tail -1)
 
 echo "Creating basic directories..."
 mkdir ~/stuff
