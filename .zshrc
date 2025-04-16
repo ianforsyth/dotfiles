@@ -16,8 +16,8 @@ alias reload='source ~/.zshrc'
 alias envim='e ~/.config/nvim/'
 alias eworkspaces='e ~/workspace/dotfiles/nvim/workspaces'
 
+alias workspace='cd ~/workspace'
 alias dotfiles='cd ~/workspace/dotfiles'
-
 alias gambit='cd ~/workspace/gambit'
 alias base='cd ~/workspace/base'
 alias app='cd ~/workspace/base/app'
