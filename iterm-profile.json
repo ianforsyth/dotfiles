@@ -44,7 +44,7 @@
   },
   "Non-ASCII Anti Aliased" : true,
   "Sync Title" : false,
-  "Disable Window Resizing" : true,
+  "Disable Window Resizing" : false,
   "Description" : "Default",
   "Close Sessions On End" : true,
   "Jobs to Ignore" : [
@@ -296,19 +296,19 @@
   "Window Type" : 0,
   "Use Bright Bold" : true,
   "Cursor Text Color" : {
-    "Red Component" : 0.20784313725490197,
-    "Color Space" : "sRGB",
-    "Blue Component" : 0.20784313725490197,
+    "Red Component" : 0.90980392694473267,
+    "Color Space" : "Calibrated",
+    "Blue Component" : 0.64313727617263794,
     "Alpha Component" : 1,
-    "Green Component" : 0.20784313725490197
+    "Green Component" : 0.83137255907058716
   },
   "Default Bookmark" : "No",
   "Cursor Color" : {
-    "Red Component" : 0.71764705882352942,
-    "Color Space" : "sRGB",
-    "Blue Component" : 0.58823529411764708,
+    "Red Component" : 0.17255303263664246,
+    "Color Space" : "Calibrated",
+    "Blue Component" : 0.17255082726478577,
     "Alpha Component" : 1,
-    "Green Component" : 0.66274509803921566
+    "Green Component" : 0.17254787683486938
   },
   "Ansi 1 Color" : {
     "Red Component" : 0.80000001192092896,
@@ -320,6 +320,13 @@
   "Name" : "Ian",
   "Blinking Cursor" : false,
   "Guid" : "62245A30-A9C0-4ACD-94DB-58BA271B4DE8",
+  "Match Background Color" : {
+    "Red Component" : 0.99697142839431763,
+    "Color Space" : "P3",
+    "Blue Component" : 0.32116127014160156,
+    "Alpha Component" : 1,
+    "Green Component" : 0.98600882291793823
+  },
   "Idle Code" : 0,
   "Ansi 10 Color" : {
     "Red Component" : 0.72156864404678345,
@@ -361,7 +368,7 @@
   "AWDS Pane Directory" : "",
   "Blur" : false,
   "Vertical Spacing" : 1,
-  "Normal Font" : "HackNerdFontComplete-Regular 11",
+  "Normal Font" : "MonaspiceNeNF-Light 13 {\"featureSettings\":[{\"CTFeatureSelectorIdentifier\":8,\"CTFeatureTypeIdentifier\":35},{\"CTFeatureSelectorIdentifier\":18,\"CTFeatureTypeIdentifier\":35},{\"CTFeatureSelectorIdentifier\":14,\"CTFeatureTypeIdentifier\":35},{\"CTFeatureSelectorIdentifier\":20,\"CTFeatureTypeIdentifier\":35},{\"CTFeatureSelectorIdentifier\":16,\"CTFeatureTypeIdentifier\":35},{\"CTFeatureSelectorIdentifier\":12,\"CTFeatureTypeIdentifier\":35},{\"CTFeatureSelectorIdentifier\":10,\"CTFeatureTypeIdentifier\":35},{\"CTFeatureSelectorIdentifier\":6,\"CTFeatureTypeIdentifier\":35},{\"CTFeatureSelectorIdentifier\":4,\"CTFeatureTypeIdentifier\":35},{\"CTFeatureSelectorIdentifier\":2,\"CTFeatureTypeIdentifier\":35}]}",
   "Ansi 7 Color" : {
     "Red Component" : 0.65882354974746704,
     "Color Space" : "Calibrated",
@@ -399,7 +406,7 @@
   },
   "Screen" : -1,
   "AWDS Window Option" : "No",
-  "Non Ascii Font" : "Monaco 12",
+  "Non Ascii Font" : "MonaspiceArNFM-Regular 12",
   "Ansi 13 Color" : {
     "Red Component" : 0.82745099067687988,
     "Color Space" : "Calibrated",
