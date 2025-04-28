@@ -50,6 +50,7 @@ fi
 echo 'Installing homebrew utils...'
 brew install git
 brew install asdf
+brew install neovim
 
 # Needed for yarn
 brew install gnu-tar 
