@@ -51,6 +51,7 @@ echo 'Installing homebrew utils...'
 brew install git
 brew install asdf
 brew install neovim
+brew install font-monaspace-nerd-font
 
 # Needed for yarn
 brew install gnu-tar 
