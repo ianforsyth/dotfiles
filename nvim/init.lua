@@ -27,10 +27,10 @@ vim.opt.rtp:prepend(lazypath)
 -- PLUGINS
 ---------------------------------------------------------------------------------
 local plugins = {
+  -- Use `:Lazy update` to persist changes
   cmp = "hrsh7th/nvim-cmp",
   floaterm = "voldikss/vim-floaterm",
-  vim_test = "vim-test/vim-test",
-  openingh = "almo7aya/openingh.nvim",
+  openingh = "almo7aya/openingh.nvim", -- Opens the current file or project page in GitHub
   explorer = "simonmclean/triptych.nvim",
   comment = "numToStr/Comment.nvim",
   dashboard = "nvimdev/dashboard-nvim",
@@ -42,11 +42,11 @@ local plugins = {
   bufferline = "akinsho/bufferline.nvim",
   telescope = "nvim-telescope/telescope.nvim",
   gruvbox = "ellisonleao/gruvbox.nvim",
-  metals = "scalameta/nvim-metals",
   gitsigns = "lewis6991/gitsigns.nvim",
   lsp_lines = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
   snippets = "L3MON4D3/LuaSnip",
   cmp_snippets = "saadparwaiz1/cmp_luasnip",
+  noice = "folke/noice.nvim", -- Pop outs for cmd and search, notifications
 }
 
 require("lazy").setup({
@@ -65,6 +65,7 @@ require("lazy").setup({
       "hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
       "hrsh7th/cmp-buffer",   -- Buffer source for nvim-cmp
       "hrsh7th/cmp-path",     -- Path source for nvim-cmp
+      "hrsh7th/cmp-cmdline",  -- Command line source for nvim-cmp
       "rafamadriz/friendly-snippets", -- A collection of snippets for multiple languages
     },
     config = function()
@@ -72,6 +73,10 @@ require("lazy").setup({
       local luasnip = require("luasnip")
 
       cmp.setup({
+        -- Highlights first option
+        completion = {
+          completeopt = 'menu,menuone,noinsert'
+        },
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
@@ -93,18 +98,27 @@ require("lazy").setup({
         })
       })
 
+      cmp.setup.cmdline({'/', '?'}, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = 'buffer' }
+        }
+      })
+
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = 'path' }
+        }, {
+          { name = 'cmdline' }
+        })
+      })
+
       require("luasnip.loaders.from_vscode").lazy_load()
       require("snippets")
     end
   },
   plugins.floaterm,
-  {
-    plugins.vim_test,
-    config = function()
-      vim.g["test#strategy"] = "neovim"
-      vim.g["test#neovim#start_normal"] = 1
-    end,
-  },
   plugins.openingh,
   {
     plugins.explorer,
@@ -272,36 +286,6 @@ require("lazy").setup({
     end
   },
   {
-    plugins.metals,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    ft = { "scala", "sbt", "java" },
-    opts = function()
-      local metals_config = require("metals").bare_config()
-      metals_config.on_attach = function(client, bufnr)
-        -- your on_attach function
-      end
-
-      metals_config.settings = {
-        autoImportBuild = "all",
-        defaultBspToBuildTool = true,
-      }
-
-      return metals_config
-    end,
-    config = function(self, metals_config)
-      local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = self.ft,
-        callback = function()
-          require("metals").initialize_or_attach(metals_config)
-        end,
-        group = nvim_metals_group,
-      })
-    end
-  },
-  {
     plugins.gitsigns,
     config = function()
       require('gitsigns').setup()
@@ -312,6 +296,16 @@ require("lazy").setup({
     config = function()
       require("lsp_lines").setup()
     end,
+  },
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+    },
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    }
   }
 })
 
@@ -430,7 +424,6 @@ vim.diagnostic.config({
   virtual_text = false,
 })
 
-
 ---------------------------------------------------------------------------------
 -- KEYMAPS
 ---------------------------------------------------------------------------------
@@ -448,15 +441,13 @@ vim.api.nvim_set_keymap('n', '<leader>fd', ':lua _G.delete_current_file()<CR>', 
 vim.api.nvim_set_keymap('n', '<leader>fd', ':lua _G.delete_current_file()<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>fn', ':lua _G.create_and_open_file()<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>fs', ':lua _G.open_in_finder()<CR>', { noremap = true, silent = true })
-
 vim.api.nvim_set_keymap('n', '<leader>fe', ':Triptych<CR>', { noremap = true, silent = true })
 
 vim.keymap.set('n', '<leader>en', function()
   vim.diagnostic.goto_next({float = false})
 end, { noremap = true, silent = true, desc = "Go to next diagnostic without float" })
 
-
-vim.keymap.set("n", "<leader>x", ":%bd!|e#|bd#<CR>", { noremap = true, silent = true }) -- Close all buffers except current
+vim.keymap.set("n", "<leader>x", ":%bd!|e#|bd#<CR>", { noremap = true, silent = true, desc = "Close all buffers except current" })
 
 vim.keymap.set({"n", "v"}, "gh", ":OpenInGHFileLines!<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gf", ":Lspsaga finder<CR>", {noremap=true, silent=true})
@@ -466,11 +457,6 @@ vim.keymap.set("n", "ga", ":Lspsaga code_action<CR>", {noremap=true, silent=true
 
 vim.keymap.set('n', '<C-\\>', ':FloatermToggle<CR>', { noremap = true, silent = true })
 vim.keymap.set('t', '<C-\\>', '<C-\\><C-n>:FloatermToggle<CR>', { noremap = true, silent = true })
-
-vim.keymap.set('n', 'tn', ":TestNearest<CR>", { noremap = true, silent = true })
-vim.keymap.set('n', 'tl', ":TestLast<CR>", { noremap = true, silent = true })
-vim.keymap.set('n', 'tf', ":TestFile<CR>", { noremap = true, silent = true })
-vim.keymap.set('n', 'ts', ":TestSuite<CR>", { noremap = true, silent = true })
 
 -- Navigate buffers
 vim.keymap.set("n", "<C-l>", ":bnext<CR>", { noremap = true, silent = true, desc = "Next buffer"})
@@ -490,18 +476,12 @@ local options = {
   tabstop = 2,                             -- insert 2 spaces for a tab
   swapfile = false,                        -- prevents a swapfile
   termguicolors = true,                    -- set term gui colors (most terminals support this)
-  -- timeoutlen = 1000,                       -- time to wait for a mapped sequence to complete (in milliseconds)
   undofile = true,                         -- enable persistent undo
-  -- updatetime = 300,                        -- faster completion (4000ms default)
   cursorline = true,                       -- highlight the current line
   number = true,                           -- set numbered lines
   signcolumn = "number",                   -- show signs over the top of line numbers
   scrolloff = 10,                           -- extra room below the end of a file
-  -- guifont = "monospace:h17",               -- the font used in graphical neovim applications
 }
-
--- IF (4/2/24): Not sure if this is needed, copied over from nvim-metals minimal config example
-vim.opt_global.completeopt = { "menuone", "noinsert", "noselect" }
 
 for k, v in pairs(options) do
   vim.opt[k] = v
