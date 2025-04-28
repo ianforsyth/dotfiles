@@ -1,7 +1,3 @@
-source ~/workspace/dotfiles/.strava-commands.sh
-source ~/workspace/dotfiles/.saas-commands
-source ~/workspace/dotfiles/.localsecrets
-
 # ----- Aliases -----
 alias ll='ls -la'
 alias ..='cd ..'
