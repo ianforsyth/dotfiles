@@ -169,7 +169,7 @@ require("lazy").setup({
   {
     plugins.lspconfig,
     config = function()
-      require'lspconfig'.tsserver.setup{} -- Typescript
+      require'lspconfig'.ts_ls.setup{} -- Typescript
       require'lspconfig'.solargraph.setup{} -- Ruby
     end,
     init = function()
