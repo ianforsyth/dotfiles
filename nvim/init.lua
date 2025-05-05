@@ -52,6 +52,7 @@ local plugins = {
 require("lazy").setup({
   {
     plugins.comment,
+    event = "VeryLazy", -- Load late in the startup sequence
     config = function()
       require('Comment').setup()
     end,
@@ -118,8 +119,14 @@ require("lazy").setup({
       require("snippets")
     end
   },
-  plugins.floaterm,
-  plugins.openingh,
+  {
+    plugins.floaterm,
+    cmd = "FloatermToggle", -- Load when FloatermToggle command is used
+  },
+  {
+    plugins.openingh,
+    cmd = "OpenInGHFileLines", -- Load when OpenInGHFileLines command is used
+  },
   {
     plugins.explorer,
     event = 'VeryLazy',
@@ -133,7 +140,8 @@ require("lazy").setup({
           show_hidden = true
         }
       })
-    end
+    end,
+    dependencies = { {'nvim-tree/nvim-web-devicons'}}
   },
   {
     plugins.dashboard,
@@ -147,6 +155,7 @@ require("lazy").setup({
   },
   {
     plugins.sessions,
+    event = "VeryLazy", -- Load late in the startup sequence
     config = function()
       require("sessions").setup()
     end
@@ -186,14 +195,11 @@ require("lazy").setup({
       require'lspconfig'.ts_ls.setup{} -- Typescript
       require'lspconfig'.solargraph.setup{} -- Ruby
     end,
-    init = function()
-      vim.fn.system([[command -v typescript-language-server >/dev/null 2>&1 || npm install -g typescript-language-server typescript]])
-      vim.fn.system([[gem list -i solargraph >/dev/null || gem install solargraph]])
-    end
   },
   {
     plugins.treesitter,
     build = ":TSUpdate",
+    event = "VeryLazy", -- Load late in the startup sequence
     config = function()
       require("nvim-treesitter.configs").setup {
         ensure_installed = {
@@ -211,6 +217,7 @@ require("lazy").setup({
   },
   {
     plugins.lspsaga,
+    event = "VeryLazy", -- Load late in the startup sequence
     dependencies = {
         'nvim-treesitter/nvim-treesitter',
         'nvim-tree/nvim-web-devicons'
@@ -230,6 +237,7 @@ require("lazy").setup({
   },
   {
     plugins.bufferline,
+    event = "VeryLazy", -- Load late in the startup sequence
     version = "*",
     dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
@@ -243,6 +251,8 @@ require("lazy").setup({
   },
   {
     plugins.telescope,
+    cmd = "Telescope", -- Load when Telescope command is used
+    keys = { "<leader>ff", "<leader>fg", "<leader>fG", "<leader>w" }, -- Also load on keymaps
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
       require('telescope').setup{
@@ -287,12 +297,14 @@ require("lazy").setup({
   },
   {
     plugins.gitsigns,
+    event = "VeryLazy", -- Load late in the startup sequence
     config = function()
       require('gitsigns').setup()
     end,
   },
   {
     plugins.lsp_lines,
+    event = "VeryLazy", -- Load late in the startup sequence
     config = function()
       require("lsp_lines").setup()
     end,
@@ -484,7 +496,6 @@ end, { noremap = true, silent = true, desc = "File explorer, showing hidden file
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fG', builtin.grep_string, {})
 vim.api.nvim_set_keymap('n', '<leader>w', ':Telescope workspaces<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>fd', ':lua _G.delete_current_file()<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>fd', ':lua _G.delete_current_file()<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>fn', ':lua _G.create_and_open_file()<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>fs', ':lua _G.open_in_finder()<CR>', { noremap = true, silent = true })
