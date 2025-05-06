@@ -298,6 +298,8 @@ require("lazy").setup({
   },
   {
     plugins.noice,
+    event = "VeryLazy",
+    opts = {}, -- IF (5/5/25): Empty opts needed for some reason
     dependencies = {
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
