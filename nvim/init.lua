@@ -298,7 +298,6 @@ require("lazy").setup({
   },
   {
     plugins.noice,
-    event = "VeryLazy",
     dependencies = {
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
@@ -310,6 +309,11 @@ require("lazy").setup({
     version = false, -- Never set this value to "*"! Never!
     opts = {
       provider = "claude",
+      mappings = {
+        submit = {
+          insert = "<CR>",
+        },
+      },
     },
     build = "make",
     dependencies = {
