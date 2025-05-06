@@ -42,10 +42,10 @@ local plugins = {
   bufferline = "akinsho/bufferline.nvim",
   telescope = "nvim-telescope/telescope.nvim",
   gruvbox = "ellisonleao/gruvbox.nvim",
-  gitsigns = "lewis6991/gitsigns.nvim",
   lsp_lines = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
   snippets = "L3MON4D3/LuaSnip",
-  cmp_snippets = "saadparwaiz1/cmp_luasnip",
+  -- IF (5/5/25): Commenting this out, not sure if it's used or if luaSnip is doing everything
+  -- cmp_snippets = "saadparwaiz1/cmp_luasnip",
   noice = "folke/noice.nvim", -- Pop outs for cmd and search, notifications
   diffs = "echasnovski/mini.diff",
   lazygit = "kdheepak/lazygit.nvim",
@@ -80,7 +80,8 @@ require("lazy").setup({
     event = "InsertEnter", -- Lazy-load on entering insert mode
     dependencies = {
       plugins.snippets,
-      plugins.cmp_snippets,
+      -- IF (5/5/25): Commenting this out, not sure if it's used or if luaSnip is doing everything
+      -- plugins.cmp_snippets,
       "hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
       "hrsh7th/cmp-buffer",   -- Buffer source for nvim-cmp
       "hrsh7th/cmp-path",     -- Path source for nvim-cmp
