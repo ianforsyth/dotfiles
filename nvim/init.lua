@@ -47,6 +47,9 @@ local plugins = {
   snippets = "L3MON4D3/LuaSnip",
   cmp_snippets = "saadparwaiz1/cmp_luasnip",
   noice = "folke/noice.nvim", -- Pop outs for cmd and search, notifications
+  diffs = "echasnovski/mini.diff",
+  lazygit = "kdheepak/lazygit.nvim",
+  ai = "yetone/avante.nvim",
 }
 
 require("lazy").setup({
@@ -55,6 +58,21 @@ require("lazy").setup({
     event = "VeryLazy", -- Load late in the startup sequence
     config = function()
       require('Comment').setup()
+    end,
+  },
+  {
+    plugins.diffs,
+    event = "VeryLazy",
+    config = function()
+      require("mini.diff").setup({
+        mappings = {
+          goto_prev = 'gp',
+          goto_next = 'gn',
+        },
+        options = {
+          wrap_goto = true
+        }
+      })
     end,
   },
   {
@@ -237,7 +255,6 @@ require("lazy").setup({
   },
   {
     plugins.bufferline,
-    event = "VeryLazy", -- Load late in the startup sequence
     version = "*",
     dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
@@ -257,8 +274,8 @@ require("lazy").setup({
     config = function()
       require('telescope').setup{
         defaults = {
-            file_ignore_patterns = { ".git/" },
-            path_display = {"truncate"},
+          file_ignore_patterns = { ".git/" },
+          path_display = {"truncate"},
         }
       }
     end
@@ -266,41 +283,10 @@ require("lazy").setup({
   {
     plugins.gruvbox,
     priority = 1000 ,
-    -- TODO (4/1/24): Go through these config options and remove unused/unwanted ones
     config = function()
-      require("gruvbox").setup({
-        terminal_colors = true,
-        undercurl = true,
-        underline = true,
-        bold = true,
-        italic = {
-          strings = true,
-          emphasis = true,
-          comments = true,
-          operators = false,
-          folds = true,
-        },
-        strikethrough = true,
-        invert_selection = false,
-        invert_signs = false,
-        invert_tabline = false,
-        invert_intend_guides = false,
-        inverse = true,
-        contrast = "",
-        palette_overrides = {},
-        overrides = {},
-        dim_inactive = false,
-        transparent_mode = false,
-      })
+      require("gruvbox").setup()
       vim.cmd("colorscheme gruvbox")
     end
-  },
-  {
-    plugins.gitsigns,
-    event = "VeryLazy", -- Load late in the startup sequence
-    config = function()
-      require('gitsigns').setup()
-    end,
   },
   {
     plugins.lsp_lines,
@@ -310,17 +296,15 @@ require("lazy").setup({
     end,
   },
   {
-    "folke/noice.nvim",
+    plugins.noice,
     event = "VeryLazy",
-    opts = {
-    },
     dependencies = {
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
     }
   },
   {
-    "yetone/avante.nvim",
+    plugins.ai,
     event = "VeryLazy",
     version = false, -- Never set this value to "*"! Never!
     opts = {
@@ -333,7 +317,6 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
       --- The below dependencies are optional,
-      "echasnovski/mini.pick", -- for file_selector provider mini.pick
       "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
       "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
       "ibhagwan/fzf-lua", -- for file_selector provider fzf
@@ -365,6 +348,13 @@ require("lazy").setup({
         ft = { "markdown", "Avante" },
       },
     },
+  },
+  {
+    plugins.lazygit,
+    cmd = {"LazyGit", "LazyGitConfig"},
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
   }
 })
 
@@ -376,14 +366,14 @@ function _G.open_dashboard_if_no_buffers()
     local buffer_loaded = false
 
     for _, buf in ipairs(buffers) do
-        if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted and vim.api.nvim_buf_get_name(buf) ~= "" then
-            buffer_loaded = true
-            break
-        end
+      if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted and vim.api.nvim_buf_get_name(buf) ~= "" then
+        buffer_loaded = true
+        break
+      end
     end
 
     if not buffer_loaded then
-        vim.cmd("Dashboard")
+      vim.cmd("Dashboard")
     end
 end
 
@@ -398,9 +388,9 @@ function _G.create_and_open_file()
   end
   -- Proceed only if the file name is not empty (avoiding <Ctrl>-c case)
   if vim.fn.filereadable(new_file) == 0 then
-      local uv = vim.loop
-      local fd = uv.fs_open(new_file, "w", 438) -- 438 is octal for 0666
-      if fd then uv.fs_close(fd) else print("Error creating file.") return end
+    local uv = vim.loop
+    local fd = uv.fs_open(new_file, "w", 438) -- 438 is octal for 0666
+    if fd then uv.fs_close(fd) else print("Error creating file.") return end
   end
   vim.cmd('edit ' .. new_file)
 end
@@ -442,16 +432,16 @@ end
 vim.api.nvim_create_autocmd("VimEnter", {
     pattern = "*",
     callback = function()
-        -- Delay the execution to ensure all startup processes complete
-        vim.defer_fn(function() _G.open_dashboard_if_no_buffers() end, 100)
+      -- Delay the execution to ensure all startup processes complete
+      vim.defer_fn(function() _G.open_dashboard_if_no_buffers() end, 100)
     end,
 })
 
 vim.api.nvim_create_autocmd("BufDelete", {
     pattern = "*",
     callback = function()
-        -- Use a small delay to ensure the buffer list is updated before checking
-        vim.defer_fn(function() _G.open_dashboard_if_no_buffers() end, 100)
+      -- Use a small delay to ensure the buffer list is updated before checking
+      vim.defer_fn(function() _G.open_dashboard_if_no_buffers() end, 100)
     end,
 })
 -- IF (4/2/24) Always enter a terminal in insert mode
@@ -487,7 +477,9 @@ vim.diagnostic.config({
 -- KEYMAPS
 ---------------------------------------------------------------------------------
 vim.api.nvim_set_keymap('i', 'jj', '<Esc>', {noremap = true})
-vim.api.nvim_set_keymap('t', 'jj', '<C-\\><C-n>', {noremap = true})
+-- IF (5/5/25): Removing this for now because it was conflicting with lazygit.
+-- TBD on if I'm keeping that around.
+-- vim.api.nvim_set_keymap('t', 'jj', '<C-\\><C-n>', {noremap = true})
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', function()
@@ -512,6 +504,7 @@ vim.keymap.set("n", "gf", ":Lspsaga finder<CR>", {noremap=true, silent=true})
 vim.keymap.set("n", "gd", ":Lspsaga peek_definition<CR>", {noremap=true, silent=true})
 vim.keymap.set("n", "gt", ":Lspsaga hover_doc<CR>", {noremap=true, silent=true})
 vim.keymap.set("n", "ga", ":Lspsaga code_action<CR>", {noremap=true, silent=true})
+vim.keymap.set("n", "<leader>gg", ":LazyGit<CR>", { noremap = true, silent = true, desc = "Open LazyGit" })
 
 vim.keymap.set('n', '<C-\\>', ':FloatermToggle<CR>', { noremap = true, silent = true })
 vim.keymap.set('t', '<C-\\>', '<C-\\><C-n>:FloatermToggle<CR>', { noremap = true, silent = true })
@@ -519,6 +512,9 @@ vim.keymap.set('t', '<C-\\>', '<C-\\><C-n>:FloatermToggle<CR>', { noremap = true
 -- Navigate buffers
 vim.keymap.set("n", "<C-l>", ":bnext<CR>", { noremap = true, silent = true, desc = "Next buffer"})
 vim.keymap.set("n", "<C-h>", ":bprev<CR>", { noremap = true, silent = true, desc = "Next buffer"})
+
+-- AI
+vim.keymap.set("n", "<leader>an", ":AvanteChatNew<CR>", { noremap = true, silent = true, desc = "New Avante Chat" })
 
 ---------------------------------------------------------------------------------
 -- OPTIONS
