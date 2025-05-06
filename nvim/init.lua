@@ -507,6 +507,7 @@ vim.keymap.set("n", "gt", ":Lspsaga hover_doc<CR>", {noremap=true, silent=true})
 vim.keymap.set("n", "ga", ":Lspsaga code_action<CR>", {noremap=true, silent=true})
 vim.keymap.set("n", "<leader>gg", ":LazyGit<CR>", { noremap = true, silent = true, desc = "Open LazyGit" })
 
+-- Terminal
 vim.keymap.set('n', '<C-\\>', ':FloatermToggle<CR>', { noremap = true, silent = true })
 vim.keymap.set('t', '<C-\\>', '<C-\\><C-n>:FloatermToggle<CR>', { noremap = true, silent = true })
 
