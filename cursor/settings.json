@@ -133,5 +133,6 @@
   "zenMode.centerLayout": false,
   "zenMode.fullScreen": false,
   "zenMode.hideStatusBar": false,
-  "zenMode.restore": true
+  "zenMode.restore": true,
+  "zenMode.hideLineNumbers": false
 }
