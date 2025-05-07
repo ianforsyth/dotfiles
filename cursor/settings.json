@@ -1,40 +1,30 @@
 {
+  "cursor.inline.suggestions.enabled": false,
+  "editor.autoIndent": "full",
+  "editor.cursorBlinking": "solid",
+  "editor.cursorStyle": "block",
+  "editor.cursorSurroundingLines": 10,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontFamily": "'MonaspiceNe Nerd Font Light', monospace",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 13,
+  "editor.formatOnSave": true,
+  "editor.insertSpaces": true,
+  "editor.lineNumbers": "on",
+  "editor.occurrencesHighlight": "off",
+  "editor.peekWidgetDefaultFocus": "editor",
+  "editor.renderLineHighlight": "all",
+  "editor.scrollBeyondLastLine": false,
+  "editor.tabSize": 2,
+  "explorer.autoReveal": true,
+  "explorer.compactFolders": false,
   "files.associations": {
     "*.mdc": "markdown"
   },
-  "vim.useSystemClipboard": true,
-  "cursor.inline.suggestions.enabled": false,
-  "zenMode.fullScreen": false,
-  "zenMode.centerLayout": false,
-  "editor.tabSize": 2,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.insertSpaces": true,
-  "editor.renderLineHighlight": "all",
-  "editor.lineNumbers": "on",
-  "editor.scrollBeyondLastLine": false,
-  "editor.autoIndent": "full",
-  "editor.formatOnSave": true,
-  "editor.fontSize": 13,
-  "editor.cursorSurroundingLines": 10,
-  "editor.occurrencesHighlight": "off",
-  "editor.fontFamily": "'MonaspiceNe Nerd Font Light', monospace",
-  "editor.fontLigatures": true,
-  "terminal.integrated.fontFamily": "'MonaspiceNe Nerd Font Light', monospace",
   "files.trimTrailingWhitespace": true,
-  "explorer.autoReveal": true,
-  "workbench.editor.enablePreview": false,
   "search.smartCase": true,
-  "explorer.compactFolders": false,
-  "editor.cursorBlinking": "solid",
-  "workbench.activityBar.orientation": "vertical",
-  "workbench.activityBar.location": "hidden",
-  "editor.cursorStyle": "block",
-  "workbench.colorCustomizations": {
-    "editorCursor.foreground": "#f3931e",
-    "editorCursor.background": "#000000",
-    "editor.findMatchHighlightBackground": "#c3781d8c",
-    "editor.findMatchHighlightBorder": "#f3931e"
-  },
+  "terminal.integrated.fontFamily": "'MonaspiceNe Nerd Font Light', monospace",
+  "update.releaseTrack": "prerelease",
   "vim.hlsearch": true,
   "vim.insertModeKeyBindings": [
     {
@@ -42,6 +32,7 @@
       "after": ["<Esc>"]
     }
   ],
+  "vim.leader": "<space>",
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": ["<leader>", "x"],
@@ -110,6 +101,7 @@
       "commands": ["workbench.action.nextEditor"]
     }
   ],
+  "vim.useSystemClipboard": true,
   "vim.visualModeKeyBindingsNonRecursive": [
     {
       "before": ["<leader>", "a", "i"],
@@ -120,12 +112,20 @@
       "commands": ["aichat.newchataction"]
     }
   ],
-  "vim.leader": "<space>",
-  "workbench.navigationControl.enabled": false,
-  "workbench.layoutControl.enabled": false,
+  "workbench.activityBar.location": "hidden",
+  "workbench.activityBar.orientation": "vertical",
+  "workbench.colorCustomizations": {
+    "editor.findMatchHighlightBackground": "#c3781d8c",
+    "editor.findMatchHighlightBorder": "#f3931e",
+    "editorCursor.background": "#000000",
+    "editorCursor.foreground": "#f3931e"
+  },
   "workbench.colorTheme": "Gruvbox Dark Medium",
-  "editor.peekWidgetDefaultFocus": "editor",
-  "update.releaseTrack": "prerelease",
   "workbench.editor.editorActionsLocation": "hidden",
-  "workbench.statusBar.visible": false
+  "workbench.editor.enablePreview": false,
+  "workbench.layoutControl.enabled": false,
+  "workbench.navigationControl.enabled": false,
+  "workbench.statusBar.visible": false,
+  "zenMode.centerLayout": false,
+  "zenMode.fullScreen": false
 }
