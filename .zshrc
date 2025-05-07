@@ -48,3 +48,4 @@ fi
 # --------------------------
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
