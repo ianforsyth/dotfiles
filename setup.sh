@@ -22,7 +22,7 @@ defaults write com.apple.AppleMultitouchTrackpad TrackpadRightClick -bool false
 defaults write -g AppleEnableSwipeNavigateWithScrolls -bool false
 
 echo 'Turning keyboard repeat up and keyboard delay down'
-defaults write -g InitialKeyRepeat -int 10 
+defaults write -g InitialKeyRepeat -int 10
 defaults write -g KeyRepeat -int 1
 
 echo 'Restarting system ui for preferences to take hold...'
@@ -54,7 +54,7 @@ brew install neovim
 brew install font-monaspace-nerd-font
 
 # Needed for yarn
-brew install gnu-tar 
+brew install gnu-tar
 brew install gnupg
 
 echo 'Installing homebrew applications...'
@@ -66,6 +66,7 @@ brew install --cask 1password
 brew install --cask rectangle-pro
 brew install --cask obsidian
 brew install --cask todoist
+brew install --cask cursor
 
 echo "Installing asdf plugins..."
 asdf plugin add nodejs
@@ -92,3 +93,9 @@ ln -s ~/workspace/dotfiles/.gitignore ~/.gitignore
 
 echo 'Linking Neovim configuration...'
 ln -s ~/workspace/dotfiles/nvim ~/.config/nvim
+
+echo 'Linking Cursor/VS Code configuration...'
+ln -sf ~/workspace/dotfiles/cursor/settings.json ~/Library/Application\ Support/Cursor/User/settings.json
+ln -sf ~/workspace/dotfiles/cursor/keybindings.json ~/Library/Application\ Support/Cursor/User/keybindings.json
+ln -sf ~/workspace/dotfiles/cursor/snippets ~/Library/Application\ Support/Cursor/User/snippets
+ln -sf ~/workspace/dotfiles/cursor/.cusor ~/.cusor

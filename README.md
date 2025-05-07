@@ -13,5 +13,17 @@
 - Map caps lock to ctrl: Mac → System Settings → Keyboard → Keyboard → Shortcuts → Modifier Keys
 
 ## Manual app setup
-- Import profile to iTerm2
-- Import config to RectanglePro
+- Cursor/Code
+  - The setup script should handle symlinking preferences, keybindings, snippets, and .cursor (for extensions)
+  - Automatically syncing everything seems brittle
+  - Extentions at the time of writing:
+    - Gruvbox Theme
+    - Import Cost
+    - Prettier
+    - Vim
+  - There should also be a .code_profile file in the directory to load in worst case (might be stale)
+- iTerm2
+  - Set "Load settings from a custom folder" (the iTerm directory here)
+  - Set to save changes automatically
+- RectanglePro
+  - Import config
