@@ -2,13 +2,14 @@
   "files.associations": {
     "*.mdc": "markdown"
   },
+  "zenMode.fullScreen": false,
+  "zenMode.centerLayout": false,
   "editor.tabSize": 2,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.insertSpaces": true,
   "editor.renderLineHighlight": "all",
   "editor.lineNumbers": "on",
   "editor.scrollBeyondLastLine": false,
-  "editor.minimap.enabled": false,
   "editor.autoIndent": "full",
   "editor.formatOnSave": true,
   "editor.fontSize": 13,
@@ -23,7 +24,13 @@
   "search.smartCase": true,
   "explorer.compactFolders": false,
   "editor.cursorBlinking": "solid",
+  "workbench.activityBar.orientation": "vertical",
+  "workbench.activityBar.location": "hidden",
   "editor.cursorStyle": "block",
+  "workbench.colorCustomizations": {
+    "editorCursor.foreground": "#f3931e",
+    "editorCursor.background": "#000000"
+  },
   "vim.insertModeKeyBindings": [
     {
       "before": ["j", "j"],
@@ -31,6 +38,14 @@
     }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<leader>", "x"],
+      "commands": ["workbench.action.closeOtherEditors"]
+    },
+    {
+      "before": ["<leader>", "a", "c"],
+      "commands": ["workbench.action.toggleAuxiliaryBar"]
+    },
     {
       "before": ["<leader>", "a", "i"],
       "commands": ["aipopup.action.modal.generate"]
@@ -84,6 +99,7 @@
   "workbench.layoutControl.enabled": false,
   "workbench.colorTheme": "Gruvbox Dark Medium",
   "editor.peekWidgetDefaultFocus": "editor",
-  "workbench.iconTheme": "vscode-icons",
-  "update.releaseTrack": "prerelease"
+  "update.releaseTrack": "prerelease",
+  "workbench.statusBar.visible": false,
+  "workbench.editor.editorActionsLocation": "hidden"
 }
