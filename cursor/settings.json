@@ -29,8 +29,11 @@
   "editor.cursorStyle": "block",
   "workbench.colorCustomizations": {
     "editorCursor.foreground": "#f3931e",
-    "editorCursor.background": "#000000"
+    "editorCursor.background": "#000000",
+    "editor.findMatchHighlightBackground": "#c3781d8c",
+    "editor.findMatchHighlightBorder": "#f3931e"
   },
+  "vim.hlsearch": true,
   "vim.insertModeKeyBindings": [
     {
       "before": ["j", "j"],
@@ -69,6 +72,17 @@
       "commands": ["workbench.action.quickOpen"]
     },
     {
+      "before": ["<leader>", "f", "g"],
+      "commands": ["periscope.search"]
+    },
+    {
+      "before": ["<leader>", "f", "G"],
+      "commands": [
+        "editor.action.addSelectionToNextFindMatch",
+        "periscope.search"
+      ]
+    },
+    {
       "before": ["q"],
       "commands": ["closeReferenceSearch"],
       "when": "referenceSearchVisible && !inputFocus"
@@ -100,6 +114,6 @@
   "workbench.colorTheme": "Gruvbox Dark Medium",
   "editor.peekWidgetDefaultFocus": "editor",
   "update.releaseTrack": "prerelease",
-  "workbench.statusBar.visible": false,
-  "workbench.editor.editorActionsLocation": "hidden"
+  "workbench.editor.editorActionsLocation": "hidden",
+  "workbench.statusBar.visible": false
 }

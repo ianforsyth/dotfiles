@@ -7,7 +7,7 @@ alias rm='rm -i'
 alias rmd='rm -rf i'
 alias c='clear'
 
-alias e='nvim'
+alias e='cursor'
 
 alias profile='e ~/.zshrc'
 alias reload='source ~/.zshrc'
