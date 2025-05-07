@@ -7,7 +7,7 @@
 *session.vim
 
 .vscode
-# .tool-versions
+.tool-versions
 
 # This is for local secrets within the dotfile repo
 .localsecrets
