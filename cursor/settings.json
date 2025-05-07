@@ -2,6 +2,8 @@
   "files.associations": {
     "*.mdc": "markdown"
   },
+  "vim.useSystemClipboard": true,
+  "cursor.inline.suggestions.enabled": false,
   "zenMode.fullScreen": false,
   "zenMode.centerLayout": false,
   "editor.tabSize": 2,
@@ -106,6 +108,16 @@
     {
       "before": ["<C-l>"],
       "commands": ["workbench.action.nextEditor"]
+    }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<leader>", "a", "i"],
+      "commands": ["aipopup.action.modal.generate"]
+    },
+    {
+      "before": ["<leader>", "a", "a"],
+      "commands": ["aichat.newchataction"]
     }
   ],
   "vim.leader": "<space>",
