@@ -21,8 +21,8 @@ function calendarSync() {
   // Copy events from personal calendar
   const personalEvents = personalCalendar.getEvents(now, ninetyDaysLater);
   personalEvents.forEach(e => {
-    const titleText = e.getTitle().toLowerCase();
-    if (titleText.includes("birthday") || titleText.includes("private")) {
+    const titleText = e.getTitle();
+    if (titleText.toLowerCase().includes("birthday") || titleText.toLowerCase().includes("private")) {
       return;
     }
 
