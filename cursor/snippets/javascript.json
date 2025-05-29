@@ -1,0 +1,9 @@
+{
+  "Debug log": {
+    "prefix": "log",
+    "body": [
+      "console.log(`IFLOG:$1`, $2)"
+    ],
+    "description": "Add an IFLOG console.log debug"
+  }
+}

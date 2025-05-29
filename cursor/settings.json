@@ -8,7 +8,6 @@
   "editor.fontFamily": "'MonaspiceNe Nerd Font Light', monospace",
   "editor.fontLigatures": true,
   "editor.fontSize": 13,
-  "editor.formatOnSave": true,
   "editor.insertSpaces": true,
   "editor.lineNumbers": "on",
   "editor.occurrencesHighlight": "off",
@@ -51,18 +50,16 @@
       "commands": ["aichat.newchataction"]
     },
     {
-      "before": ["<leader>", "f", "e"],
-      "commands": ["workbench.files.action.showActiveFileInExplorer"],
-      "when": "!explorerViewletVisible"
-    },
-    {
-      "before": ["<leader>", "f", "e"],
-      "commands": ["workbench.action.toggleSidebarVisibility"],
-      "when": "explorerViewletVisible"
-    },
-    {
       "before": ["<leader>", "f", "f"],
       "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["<leader>", "f", "e"],
+      "commands": ["workbench.view.explorer"]
+    },
+    {
+      "before": ["<leader>", "f", "d"],
+      "commands": ["workbench.view.debug"]
     },
     {
       "before": ["<leader>", "f", "g"],
@@ -89,6 +86,10 @@
       "commands": ["editor.action.peekDefinition"]
     },
     {
+      "before": ["g", "D"],
+      "commands": ["editor.action.revealDefinition"]
+    },
+    {
       "before": ["g", "t"],
       "commands": ["editor.action.showHover"]
     },
@@ -105,7 +106,6 @@
       "commands": ["workbench.action.toggleZenMode"]
     }
   ],
-  "vim.useSystemClipboard": true,
   "vim.visualModeKeyBindingsNonRecursive": [
     {
       "before": ["<leader>", "a", "i"],
@@ -116,7 +116,6 @@
       "commands": ["aichat.newchataction"]
     }
   ],
-  "workbench.activityBar.location": "hidden",
   "workbench.activityBar.orientation": "vertical",
   "workbench.colorCustomizations": {
     "statusBar.foreground": "#5f5f5f",
@@ -126,13 +125,14 @@
     "editorCursor.foreground": "#f3931e"
   },
   "workbench.colorTheme": "Gruvbox Dark Medium",
-  "workbench.editor.editorActionsLocation": "hidden",
-  "workbench.editor.enablePreview": false,
   "workbench.layoutControl.enabled": false,
   "workbench.navigationControl.enabled": false,
   "zenMode.centerLayout": false,
   "zenMode.fullScreen": false,
   "zenMode.hideStatusBar": false,
   "zenMode.restore": true,
-  "zenMode.hideLineNumbers": false
+  "zenMode.hideLineNumbers": false,
+  "diffEditor.renderSideBySide": false,
+  "git.enableSmartCommit": true,
+  "vim.cursorStylePerMode.insert": "line"
 }

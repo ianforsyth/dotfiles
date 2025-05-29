@@ -8,6 +8,7 @@ alias rmd='rm -rf i'
 alias c='clear'
 
 alias e='cursor'
+alias tm='task-master'
 
 alias profile='e ~/.zshrc'
 alias reload='source ~/.zshrc'
@@ -22,6 +23,9 @@ alias app='cd ~/workspace/base/app'
 alias api='cd ~/workspace/base/api'
 alias hoahq='cd ~/workspace/hoahq'
 alias fs='foreman start'
+alias slack='TOKEN=$SLACK_BOT_TOKEN CHANNEL=log-ian npx slack-msg'
+
+alias pr='open "$(git config --get remote.origin.url | sed -e "s/git@github.com:/https:\/\/github.com\//" -e "s/\.git$//")/pull/new/$(git symbolic-ref --short HEAD)"'
 
 # ----- Packages -----
 autoload -U add-zsh-hook  # Handling multiple precmd hooks
@@ -49,3 +53,4 @@ fi
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+export PATH="$(asdf which node | xargs dirname):$PATH"
