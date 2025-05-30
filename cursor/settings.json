@@ -4,7 +4,6 @@
   "editor.cursorBlinking": "solid",
   "editor.cursorStyle": "block",
   "editor.cursorSurroundingLines": 10,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.fontFamily": "'MonaspiceNe Nerd Font Light', monospace",
   "editor.fontLigatures": true,
   "editor.fontSize": 13,
@@ -134,5 +133,7 @@
   "zenMode.hideLineNumbers": false,
   "diffEditor.renderSideBySide": false,
   "git.enableSmartCommit": true,
-  "vim.cursorStylePerMode.insert": "line"
+  "vim.cursorStylePerMode.insert": "line",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
 }

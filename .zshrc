@@ -5,7 +5,7 @@ alias ll='ls -la'
 alias ..='cd ..'
 alias rm='rm -i'
 alias rmd='rm -rf i'
-alias c='clear'
+alias c='clear && printf "\e[3J"'
 
 alias e='cursor'
 alias tm='task-master'
@@ -15,6 +15,8 @@ alias reload='source ~/.zshrc'
 alias envim='e ~/.config/nvim/'
 alias eworkspaces='e ~/workspace/dotfiles/nvim/workspaces'
 
+alias resi='cd ~/workspace/residesk/Server_Web_Outlook'
+
 alias workspace='cd ~/workspace'
 alias dotfiles='cd ~/workspace/dotfiles'
 alias gambit='cd ~/workspace/gambit'
@@ -23,7 +25,23 @@ alias app='cd ~/workspace/base/app'
 alias api='cd ~/workspace/base/api'
 alias hoahq='cd ~/workspace/hoahq'
 alias fs='foreman start'
-alias slack='TOKEN=$SLACK_BOT_TOKEN CHANNEL=log-ian npx slack-msg'
+
+slack() {
+  local message
+
+  if [ "$1" = "last" ]; then
+      message="$(git log -1 --pretty=%B)"
+  else
+      message="$*"
+  fi
+
+  TOKEN=$SLACK_BOT_TOKEN CHANNEL=log-ian npx slack-msg "$message"
+}
+
+sac() {
+  local msg="$1"
+  git add -A && git commit -m "$msg" && TOKEN=$SLACK_BOT_TOKEN CHANNEL=log-ian npx slack-msg "$msg"
+}
 
 alias pr='open "$(git config --get remote.origin.url | sed -e "s/git@github.com:/https:\/\/github.com\//" -e "s/\.git$//")/pull/new/$(git symbolic-ref --short HEAD)"'
 
@@ -51,6 +69,5 @@ add-zsh-hook precmd set_tab_title
 fi
 # --------------------------
 
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
-export PATH="$(asdf which node | xargs dirname):$PATH"
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
