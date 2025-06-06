@@ -26,6 +26,52 @@ alias api='cd ~/workspace/base/api'
 alias hoahq='cd ~/workspace/hoahq'
 alias fs='foreman start'
 
+fl() {
+  local LOCAL="$HOME/workspace/storage-center/wp-content/themes/tsc-intranet"
+  local REMOTE="storage-center:/var/www/html/thestoragecenter_com/intranet/wp-content/themes/tsc-intranet"
+  local DRY_RUN=""
+  local ACTION=""
+
+  # Parse dry-run flag
+  if [[ "$1" == "-d" ]]; then
+    DRY_RUN="--dry-run"
+    ACTION="$2"
+    echo "🧪 Dry run enabled"
+  else
+    ACTION="$1"
+  fi
+
+  case "$ACTION" in
+    pull)
+      echo "🔽 Syncing remote → local"
+      rclone sync "$REMOTE" "$LOCAL" \
+        --update \
+        --no-update-dir-modtime \
+        $DRY_RUN
+      ;;
+    push)
+      echo "🔼 Syncing local → remote"
+      rclone sync "$LOCAL" "$REMOTE" \
+        --update \
+        --no-update-modtime \
+        --no-update-dir-modtime \
+        $DRY_RUN
+      ;;
+    reset)
+      echo "🧹 Mirroring local → remote (removing remote-only files)"
+      git reset --hard
+      rclone sync "$LOCAL" "$REMOTE" \
+        --delete-excluded \
+        --no-update-modtime \
+        --no-update-dir-modtime \
+        $DRY_RUN
+      ;;
+    *)
+      echo "Usage: fl [-d] [pull|push|reset]"
+      ;;
+  esac
+}
+
 slack() {
   local message
 

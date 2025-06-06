@@ -135,5 +135,6 @@
   "git.enableSmartCommit": true,
   "vim.cursorStylePerMode.insert": "line",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "cursor.composer.shouldAutoScrollToBottom": false
 }
