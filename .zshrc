@@ -7,6 +7,9 @@ alias rm='rm -i'
 alias rmd='rm -rf i'
 alias c='clear && printf "\e[3J"'
 
+alias up='docker-compose up'
+alias down='docker-compose down'
+
 alias e='cursor'
 alias tm='task-master'
 
@@ -24,7 +27,6 @@ alias base='cd ~/workspace/base'
 alias app='cd ~/workspace/base/app'
 alias api='cd ~/workspace/base/api'
 alias hoahq='cd ~/workspace/hoahq'
-alias fs='foreman start'
 
 fl() {
   local LOCAL="$HOME/workspace/storage-center/wp-content/themes/tsc-intranet"
@@ -59,7 +61,6 @@ fl() {
       ;;
     reset)
       echo "🧹 Mirroring local → remote (removing remote-only files)"
-      git reset --hard
       rclone sync "$LOCAL" "$REMOTE" \
         --delete-excluded \
         --no-update-modtime \
@@ -70,6 +71,15 @@ fl() {
       echo "Usage: fl [-d] [pull|push|reset]"
       ;;
   esac
+}
+
+pgen() {
+  local timestamp=$(date +"%Y%m%d%H%M%S")
+  local name="$1"
+  local filepath="./projects/${timestamp}-${name}.md"
+
+  touch "$filepath"
+  echo "Created $filepath"
 }
 
 slack() {
@@ -114,6 +124,9 @@ set_tab_title() {
 add-zsh-hook precmd set_tab_title
 fi
 # --------------------------
+
+# Adding direnv for project-specific docker commands (base app)
+eval "$(direnv hook zsh)"
 
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"

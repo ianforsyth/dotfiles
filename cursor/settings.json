@@ -103,6 +103,10 @@
     {
       "before": ["<leader>", "z"],
       "commands": ["workbench.action.toggleZenMode"]
+    },
+    {
+      "before": ["g", "h"],
+      "commands": ["gitlens.openOnRemote"]
     }
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
@@ -113,6 +117,10 @@
     {
       "before": ["<leader>", "a", "a"],
       "commands": ["aichat.newchataction"]
+    },
+    {
+      "before": ["g", "h"],
+      "commands": ["gitlens.openOnRemote"]
     }
   ],
   "workbench.activityBar.orientation": "vertical",
@@ -134,7 +142,8 @@
   "diffEditor.renderSideBySide": false,
   "git.enableSmartCommit": true,
   "vim.cursorStylePerMode.insert": "line",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.formatOnSave": true,
-  "cursor.composer.shouldAutoScrollToBottom": false
+  "cursor.composer.shouldAutoScrollToBottom": false,
+  "explorer.confirmDelete": false
 }
