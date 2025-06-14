@@ -7,8 +7,8 @@ alias rm='rm -i'
 alias rmd='rm -rf i'
 alias c='clear && printf "\e[3J"'
 
-alias up='docker-compose up'
-alias down='docker-compose down'
+alias up='docker compose up'
+alias down='docker compose down'
 
 alias e='cursor'
 alias tm='task-master'
