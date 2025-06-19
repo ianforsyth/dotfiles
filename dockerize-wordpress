@@ -8,7 +8,6 @@ set -e
 
 # Default values
 AUTO_START=false
-CLEAN_START=false
 DATABASE_DUMP=""
 
 # Use directory name as project name
@@ -47,61 +46,67 @@ generate_salts() {
 while [[ $# -gt 0 ]]; do
     case $1 in
         --start) AUTO_START=true; shift ;;
-        --clean) CLEAN_START=true; shift ;;
         --help|-h)
             echo "Dockerize WordPress - Quick Docker Setup"
-            echo "Usage: $0 [options]"
+            echo "Usage: $0 <database-dump-file> [options]"
             echo ""
             echo "Uses current directory name as project name: $PROJECT_NAME"
             echo "Fixed ports: WordPress=8080, phpMyAdmin=8081, MySQL=3306, Redis=6379"
             echo ""
-            echo "REQUIRED: You must have a WordPress database dump file (.sql) to run this script."
+            echo "REQUIRED: Provide path to your WordPress database dump file (.sql) as the first argument."
             echo "The script will automatically import your database and prevent the WordPress install page issue."
+            echo "This script always performs a clean start (removes existing containers, networks, and MySQL volumes)."
+            echo ""
+            echo "Arguments:"
+            echo "  <database-dump-file> Path to the database dump file (.sql)"
             echo ""
             echo "Options:"
             echo "  --start              Auto-start containers after setup"
-            echo "  --clean              Remove existing containers, networks, and MySQL volumes for fresh start"
             echo "  --help, -h           Show this help"
             echo ""
             echo "Examples:"
-            echo "  $0"
-            echo "  $0 --start"
-            echo "  $0 --clean --start"
+            echo "  $0 ~/stuff/dump.sql"
+            echo "  $0 /path/to/database.sql --start"
             exit 0
             ;;
         *)
-            echo "Unknown option: $1"
-            echo "Run $0 --help for usage information"
-            exit 1
+            if [[ -z "$DATABASE_DUMP" ]]; then
+                DATABASE_DUMP="$1"
+                shift
+            else
+                echo "Unknown option: $1"
+                echo "Run $0 --help for usage information"
+                exit 1
+            fi
             ;;
     esac
 done
 
 print_info "Setting up Docker environment for: $PROJECT_NAME"
 
-# Prompt for required database dump file
-echo ""
-print_info "🗄️  Database dump file is required for setup"
-while true; do
-    print_info "Enter the path to your database dump file (.sql):"
-    read -r DATABASE_DUMP
+# Validate database dump file argument
+if [[ -z "$DATABASE_DUMP" ]]; then
+    print_error "Database dump file is required!"
+    echo ""
+    echo "Usage: $0 <database-dump-file> [options]"
+    echo ""
+    echo "Examples:"
+    echo "  $0 ~/stuff/dump.sql"
+    echo "  $0 /path/to/database.sql --start"
+    echo ""
+    echo "Run $0 --help for more information"
+    exit 1
+fi
 
-    if [[ -z "$DATABASE_DUMP" ]]; then
-        print_warning "Database dump file is required. Please enter a file path or press Ctrl+C to exit"
-        continue
-    fi
+# Expand ~ to home directory if present
+DATABASE_DUMP="${DATABASE_DUMP/#\~/$HOME}"
 
-    # Expand ~ to home directory if present
-    DATABASE_DUMP="${DATABASE_DUMP/#\~/$HOME}"
+if [[ ! -f "$DATABASE_DUMP" ]]; then
+    print_error "Database dump file not found: $DATABASE_DUMP"
+    exit 1
+fi
 
-    if [[ -f "$DATABASE_DUMP" ]]; then
-        print_success "Found database dump: $DATABASE_DUMP"
-        break
-    else
-        print_error "File not found: $DATABASE_DUMP"
-        print_info "Please enter a valid file path"
-    fi
-done
+print_success "Found database dump: $DATABASE_DUMP"
 
 # Check Docker
 if ! command -v docker &> /dev/null || ! docker info &> /dev/null; then
@@ -111,33 +116,31 @@ fi
 
 print_info "Using ports: WordPress=8080, phpMyAdmin=8081, MySQL=3306, Redis=6379"
 
-# Handle clean start
-if [[ "$CLEAN_START" == "true" ]]; then
-    print_info "Cleaning existing containers and volumes..."
+# Always perform clean start for reliable repeated runs
+print_info "Cleaning existing containers and volumes..."
 
-    # Stop and remove containers and networks
-    docker compose down 2>/dev/null || true
+# Stop and remove containers and networks
+docker compose down 2>/dev/null || true
 
-    # Remove project-specific volumes (current and common patterns)
-    VOLUME_PATTERNS=(
-        "${PROJECT_NAME}_mysql_data"
-        "${PROJECT_NAME}-mysql-data"
-        "${PROJECT_NAME//-/_}_mysql_data"
-        "$(basename $(pwd))_mysql_data"
-    )
+# Remove project-specific volumes (current and common patterns)
+VOLUME_PATTERNS=(
+    "${PROJECT_NAME}_mysql_data"
+    "${PROJECT_NAME}-mysql-data"
+    "${PROJECT_NAME//-/_}_mysql_data"
+    "$(basename $(pwd))_mysql_data"
+)
 
-    for pattern in "${VOLUME_PATTERNS[@]}"; do
-        if docker volume ls -q | grep -q "^${pattern}$"; then
-            echo "  Removing volume: $pattern"
-            docker volume rm "$pattern" 2>/dev/null || true
-        fi
-    done
+for pattern in "${VOLUME_PATTERNS[@]}"; do
+    if docker volume ls -q | grep -q "^${pattern}$"; then
+        echo "  Removing volume: $pattern"
+        docker volume rm "$pattern" 2>/dev/null || true
+    fi
+done
 
-    # Also try the generic compose down with volumes as backup
-    docker compose down -v 2>/dev/null || true
+# Also try the generic compose down with volumes as backup
+docker compose down -v 2>/dev/null || true
 
-    print_success "Clean start: removed containers, networks, and MySQL volumes"
-fi
+print_success "Clean start: removed containers, networks, and MySQL volumes"
 
 # Generate credentials
 MYSQL_PASSWORD=$(generate_password)
