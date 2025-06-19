@@ -1,0 +1,474 @@
+#!/bin/bash
+
+# Dockerize WordPress - Single Script Solution
+# Quickly set up Docker environment for WordPress development
+# Usage: ./dockerize-wordpress [project-name] [--start-port=8080] [--start]
+
+set -e
+
+# Default values
+AUTO_START=false
+CLEAN_START=false
+DATABASE_DUMP=""
+
+# Use directory name as project name
+PROJECT_NAME=$(basename $(pwd))
+
+# Fixed ports
+WP_PORT=8080
+PMA_PORT=8081
+MYSQL_PORT=3306
+
+# Colors for output
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+print_success() { echo -e "${GREEN}✅ $1${NC}"; }
+print_warning() { echo -e "${YELLOW}⚠️  $1${NC}"; }
+print_info() { echo -e "${BLUE}ℹ️  $1${NC}"; }
+print_error() { echo -e "${RED}❌ $1${NC}"; }
+
+# Generate secure password
+generate_password() {
+    openssl rand -base64 12 | tr -d "=+/" | cut -c1-12
+}
+
+# Generate WordPress salts
+generate_salts() {
+    for salt in AUTH_KEY SECURE_AUTH_KEY LOGGED_IN_KEY NONCE_KEY AUTH_SALT SECURE_AUTH_SALT LOGGED_IN_SALT NONCE_SALT; do
+        echo "define( '$salt', '$(openssl rand -base64 64 | tr -d "=+/" | cut -c1-64)' );"
+    done
+}
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --start) AUTO_START=true; shift ;;
+        --clean) CLEAN_START=true; shift ;;
+        --help|-h)
+            echo "Dockerize WordPress - Quick Docker Setup"
+            echo "Usage: $0 [options]"
+            echo ""
+            echo "Uses current directory name as project name: $PROJECT_NAME"
+            echo "Fixed ports: WordPress=8080, phpMyAdmin=8081, MySQL=3306, Redis=6379"
+            echo ""
+            echo "REQUIRED: You must have a WordPress database dump file (.sql) to run this script."
+            echo "The script will automatically import your database and prevent the WordPress install page issue."
+            echo ""
+            echo "Options:"
+            echo "  --start              Auto-start containers after setup"
+            echo "  --clean              Remove existing containers, networks, and MySQL volumes for fresh start"
+            echo "  --help, -h           Show this help"
+            echo ""
+            echo "Examples:"
+            echo "  $0"
+            echo "  $0 --start"
+            echo "  $0 --clean --start"
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            echo "Run $0 --help for usage information"
+            exit 1
+            ;;
+    esac
+done
+
+print_info "Setting up Docker environment for: $PROJECT_NAME"
+
+# Prompt for required database dump file
+echo ""
+print_info "🗄️  Database dump file is required for setup"
+while true; do
+    print_info "Enter the path to your database dump file (.sql):"
+    read -r DATABASE_DUMP
+
+    if [[ -z "$DATABASE_DUMP" ]]; then
+        print_warning "Database dump file is required. Please enter a file path or press Ctrl+C to exit"
+        continue
+    fi
+
+    # Expand ~ to home directory if present
+    DATABASE_DUMP="${DATABASE_DUMP/#\~/$HOME}"
+
+    if [[ -f "$DATABASE_DUMP" ]]; then
+        print_success "Found database dump: $DATABASE_DUMP"
+        break
+    else
+        print_error "File not found: $DATABASE_DUMP"
+        print_info "Please enter a valid file path"
+    fi
+done
+
+# Check Docker
+if ! command -v docker &> /dev/null || ! docker info &> /dev/null; then
+    print_error "Docker is not installed or running!"
+    exit 1
+fi
+
+print_info "Using ports: WordPress=8080, phpMyAdmin=8081, MySQL=3306, Redis=6379"
+
+# Handle clean start
+if [[ "$CLEAN_START" == "true" ]]; then
+    print_info "Cleaning existing containers and volumes..."
+
+    # Stop and remove containers and networks
+    docker compose down 2>/dev/null || true
+
+    # Remove project-specific volumes (current and common patterns)
+    VOLUME_PATTERNS=(
+        "${PROJECT_NAME}_mysql_data"
+        "${PROJECT_NAME}-mysql-data"
+        "${PROJECT_NAME//-/_}_mysql_data"
+        "$(basename $(pwd))_mysql_data"
+    )
+
+    for pattern in "${VOLUME_PATTERNS[@]}"; do
+        if docker volume ls -q | grep -q "^${pattern}$"; then
+            echo "  Removing volume: $pattern"
+            docker volume rm "$pattern" 2>/dev/null || true
+        fi
+    done
+
+    # Also try the generic compose down with volumes as backup
+    docker compose down -v 2>/dev/null || true
+
+    print_success "Clean start: removed containers, networks, and MySQL volumes"
+fi
+
+# Generate credentials
+MYSQL_PASSWORD=$(generate_password)
+SALTS=$(generate_salts)
+
+# Create directories
+mkdir -p database
+
+print_success "Creating Docker configuration..."
+
+# Create docker-compose.yml
+cat > docker-compose.yml << EOF
+services:
+  wordpress:
+    image: wordpress:6.4-apache
+    platform: linux/amd64
+    container_name: ${PROJECT_NAME}-wp
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${PROJECT_NAME//-/_}
+      WORDPRESS_DEBUG: 1
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./wp-config-local.php:/var/www/html/wp-config.php
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - wordpress-network
+
+  mysql:
+    image: mysql:8.0
+    platform: linux/amd64
+    container_name: ${PROJECT_NAME}-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${PROJECT_NAME//-/_}
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}_root
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_PASSWORD}_root"]
+      timeout: 20s
+      retries: 10
+      interval: 10s
+      start_period: 40s
+    networks:
+      - wordpress-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    platform: linux/amd64
+    container_name: ${PROJECT_NAME}-pma
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_PASSWORD}_root
+    depends_on:
+      - mysql
+    networks:
+      - wordpress-network
+
+  redis:
+    image: redis:7-alpine
+    platform: linux/amd64
+    container_name: ${PROJECT_NAME}-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - wordpress-network
+
+volumes:
+  mysql_data:
+
+networks:
+  wordpress-network:
+    driver: bridge
+EOF
+
+print_success "Creating WordPress configuration..."
+
+# Create wp-config-local.php
+cat > wp-config-local.php << EOF
+<?php
+/**
+ * Local WordPress Configuration
+ * Generated by dockerize-wordpress
+ */
+
+define( 'DB_NAME', '${PROJECT_NAME//-/_}' );
+define( 'DB_USER', 'wordpress' );
+define( 'DB_PASSWORD', '${MYSQL_PASSWORD}' );
+define( 'DB_HOST', 'mysql' );
+define( 'DB_CHARSET', 'utf8mb4' );
+define( 'DB_COLLATE', '' );
+
+${SALTS}
+
+\$table_prefix = 'wp_';
+
+define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_LOG', true );
+define( 'WP_DEBUG_DISPLAY', false );
+define( 'SCRIPT_DEBUG', true );
+
+ define( 'WP_HOME', 'http://localhost:8080' );
+ define( 'WP_SITEURL', 'http://localhost:8080' );
+
+define( 'DISALLOW_FILE_EDIT', true );
+define( 'WP_MEMORY_LIMIT', '512M' );
+define( 'AUTOMATIC_UPDATER_DISABLED', true );
+
+/**
+ * Redis Object Cache Configuration
+ *
+ * WP_REDIS_DISABLED disables Redis caching locally to prevent connection errors
+ * when using Object Cache Pro, Redis Cache Pro, or similar plugins that expect
+ * a Redis server. Remove this line if you want to use Redis caching locally.
+ */
+define( 'WP_REDIS_DISABLED', true );
+define( 'WP_REDIS_HOST', 'redis' );
+define( 'WP_REDIS_PORT', 6379 );
+define( 'WP_REDIS_TIMEOUT', 1 );
+define( 'WP_REDIS_READ_TIMEOUT', 1 );
+define( 'WP_REDIS_DATABASE', 0 );
+
+if ( ! defined( 'ABSPATH' ) ) {
+    define( 'ABSPATH', __DIR__ . '/' );
+}
+
+require_once ABSPATH . 'wp-settings.php';
+EOF
+
+print_success "Creating PHP configuration..."
+
+# Create uploads.ini
+cat > uploads.ini << 'EOF'
+file_uploads = On
+memory_limit = 512M
+upload_max_filesize = 64M
+post_max_size = 64M
+max_execution_time = 300
+max_input_vars = 3000
+EOF
+
+print_success "Skipping separate import script - using integrated import..."
+
+print_success "Creating quick reference..."
+
+# Create quick reference
+cat > DOCKER-SETUP.md << EOF
+# Docker WordPress: ${PROJECT_NAME}
+
+## Quick Commands
+\`\`\`bash
+docker compose up -d          # Start all services
+docker compose down           # Stop all services
+docker compose logs wordpress # View logs
+\`\`\`
+
+## 🎯 Automated Setup
+This Docker environment was set up with automatic database import to prevent the WordPress install page issue.
+
+The setup process was:
+1. ✅ Started database services only (MySQL, Redis, phpMyAdmin)
+2. ✅ Imported your database while WordPress was offline
+3. ✅ Started WordPress with existing data already present
+
+## Manual Management
+\`\`\`bash
+docker compose up -d          # Start all services
+docker compose down           # Stop all services
+\`\`\`
+
+Note: Database import is handled automatically during initial setup. To re-import, run ./dockerize-wordpress --clean again.
+
+ ## Access Points
+ - **WordPress**: http://localhost:8080
+ - **Admin**: http://localhost:8080/wp-admin
+ - **phpMyAdmin**: http://localhost:8081
+ - **Redis**: localhost:6379
+
+## Database Info
+- **Name**: ${PROJECT_NAME//-/_}
+- **User**: wordpress / ${MYSQL_PASSWORD}
+- **Root**: root / ${MYSQL_PASSWORD}_root
+
+## Redis Info
+- **Host**: redis (within containers) or localhost:6379 (from host)
+- **Port**: 6379
+- **Database**: 0
+
+ ## After Import
+ Update these in wp_options table:
+ - home: http://localhost:8080
+ - siteurl: http://localhost:8080
+
+Generated: $(date)
+EOF
+
+# Check wp-content and handle object cache
+if [[ ! -d "wp-content" ]]; then
+    print_warning "No wp-content directory found. Make sure this is a WordPress project."
+else
+    # Check for Redis object cache plugins
+    CACHE_DETECTED=false
+    CACHE_TYPE=""
+
+    if [[ -f "wp-content/object-cache.php" ]]; then
+        CACHE_DETECTED=true
+        if grep -q "Object Cache Pro" "wp-content/object-cache.php" 2>/dev/null; then
+            CACHE_TYPE="Object Cache Pro (GoDaddy/Premium)"
+        elif grep -q "Redis Cache" "wp-content/object-cache.php" 2>/dev/null; then
+            CACHE_TYPE="Redis Cache Pro"
+        else
+            CACHE_TYPE="Redis object cache"
+        fi
+    elif [[ -f "wp-content/mu-plugins/object-cache-pro.php" ]] || [[ -d "wp-content/mu-plugins/object-cache-pro" ]]; then
+        CACHE_DETECTED=true
+        CACHE_TYPE="Object Cache Pro (Must-Use Plugin)"
+    fi
+
+    if [[ "$CACHE_DETECTED" == "true" ]]; then
+        print_success "$CACHE_TYPE detected"
+        print_info "✅ WP_REDIS_DISABLED added to wp-config to prevent connection errors"
+        print_info "✅ Redis container available at redis:6379 if you want to enable it"
+        print_info "ℹ️  Remove 'WP_REDIS_DISABLED' from wp-config to enable Redis locally"
+    else
+        print_info "Redis container available at redis:6379 for caching plugins"
+    fi
+fi
+
+print_success "🎉 Docker environment ready!"
+
+echo ""
+echo "📋 Summary:"
+echo "   Project: $PROJECT_NAME"
+echo "   WordPress: http://localhost:8080"
+echo "   phpMyAdmin: http://localhost:8081"
+echo ""
+
+# Automatically implement optimal workflow with database import
+print_info "🚀 Starting optimized setup workflow with database import..."
+
+# Step 1: Start only database services
+print_info "Step 1/3: Starting database services..."
+docker compose up -d mysql redis phpmyadmin
+
+    # Wait for MySQL to be healthy and ready for database operations
+    print_info "Waiting for MySQL to be ready..."
+    while ! docker exec ${PROJECT_NAME}-db mysqladmin ping -h localhost -u root -p${MYSQL_PASSWORD}_root --silent 2>/dev/null; do
+        echo -n "."
+        sleep 2
+    done
+
+    # Additional wait to ensure MySQL permissions are fully initialized
+    print_info "Ensuring database permissions are ready..."
+    RETRIES=10
+    while [ $RETRIES -gt 0 ]; do
+        if docker exec ${PROJECT_NAME}-db mysql -u root -p${MYSQL_PASSWORD}_root -e "USE ${PROJECT_NAME//-/_}; SELECT 1;" >/dev/null 2>&1; then
+            break
+        fi
+        echo -n "."
+        sleep 1
+        RETRIES=$((RETRIES-1))
+    done
+    echo ""
+
+    if [ $RETRIES -eq 0 ]; then
+        print_error "MySQL database not ready after waiting. Continuing anyway..."
+    else
+        print_success "MySQL is ready for database operations!"
+    fi
+
+    # Step 2: Import database directly
+    print_info "Step 2/3: Importing database from: $DATABASE_DUMP"
+    # Small additional delay to ensure MySQL is completely ready
+    sleep 2
+
+    print_info "📥 Importing database..."
+    if docker exec -i ${PROJECT_NAME}-db mysql -u root -p${MYSQL_PASSWORD}_root ${PROJECT_NAME//-/_} < "$DATABASE_DUMP"; then
+        print_success "✅ Database import successful!"
+
+        # Auto-detect table prefix
+        print_info "🔍 Detecting table prefix..."
+        TABLE_PREFIX=$(docker exec -i ${PROJECT_NAME}-db mysql -u root -p${MYSQL_PASSWORD}_root ${PROJECT_NAME//-/_} -s -N -e "SHOW TABLES LIKE '%_options';" 2>/dev/null | head -1 | sed 's/_options$//')
+
+        if [[ -n "$TABLE_PREFIX" ]]; then
+            print_success "📝 Found table prefix: ${TABLE_PREFIX}_"
+
+            # Update wp-config with correct table prefix
+            sed -i.bak "s/\$table_prefix = '.*';/\$table_prefix = '${TABLE_PREFIX}_';/" wp-config-local.php
+            print_success "✅ Updated wp-config table prefix"
+
+            # Update site URLs automatically
+            print_info "🔗 Updating site URLs..."
+            docker exec -i ${PROJECT_NAME}-db mysql -u root -p${MYSQL_PASSWORD}_root ${PROJECT_NAME//-/_} -e "UPDATE ${TABLE_PREFIX}_options SET option_value = 'http://localhost:8080' WHERE option_name IN ('home', 'siteurl');" 2>/dev/null
+            print_success "✅ Updated site URLs to localhost:8080"
+        else
+            print_warning "⚠️  Could not detect table prefix. You may need to update wp-config manually."
+        fi
+    else
+        print_error "❌ Database import failed! Please check the dump file."
+        exit 1
+    fi
+
+# Step 3: Start WordPress
+print_info "Step 3/3: Starting WordPress..."
+docker compose up -d
+
+print_success "🎉 Setup complete! WordPress detected your existing data immediately."
+
+echo ""
+echo "✅ Your WordPress site is ready:"
+echo "   🌐 WordPress: http://localhost:8080"
+echo "   🔧 phpMyAdmin: http://localhost:8081"
+echo ""
+echo "   ✨ No restart needed - WordPress detected your imported data!"
+echo "   📖 See DOCKER-SETUP.md for additional information"

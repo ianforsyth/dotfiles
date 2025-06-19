@@ -3,8 +3,8 @@ source ~/workspace/dotfiles/.localsecrets
 # ----- Aliases -----
 alias ll='ls -la'
 alias ..='cd ..'
-alias rm='rm -i'
-alias rmd='rm -rf i'
+# alias rm='rm -i'
+# alias rmd='rm -rf i'
 alias c='clear && printf "\e[3J"'
 
 alias up='docker compose up'
@@ -45,10 +45,11 @@ fl() {
 
   case "$ACTION" in
     pull)
-      echo "🔽 Syncing remote → local"
+      echo "🔽 Forcing sync remote → local (mirror: deletes local-only files)"
       rclone sync "$REMOTE" "$LOCAL" \
-        --update \
+        --delete-excluded \
         --no-update-dir-modtime \
+        -v \
         $DRY_RUN
       ;;
     push)
@@ -92,6 +93,18 @@ slack() {
   fi
 
   TOKEN=$SLACK_BOT_TOKEN CHANNEL=log-ian npx slack-msg "$message"
+}
+
+cursor() {
+  if [[ "$1" == "init" ]]; then
+    mkdir -p .cursor/rules
+    mkdir projects
+    ln -sf ~/workspace/dotfiles/rules/collaboration.mdc .cursor/rules/collaboration.mdc
+    ln -sf ~/workspace/dotfiles/rules/task-list.mdc .cursor/rules/task-list.mdc
+    touch .cursor/rules/project.mdc
+  else
+    command cursor "$@"
+  fi
 }
 
 sac() {
