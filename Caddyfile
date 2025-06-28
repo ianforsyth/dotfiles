@@ -1,0 +1,3 @@
+storage-center.localhost {
+  reverse_proxy localhost:5102
+}
