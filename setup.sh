@@ -52,6 +52,7 @@ brew install git
 brew install asdf
 brew install neovim
 brew install font-monaspace-nerd-font
+brew install caddy
 
 # Needed for yarn
 brew install gnu-tar
@@ -93,6 +94,10 @@ ln -s ~/workspace/dotfiles/.gitignore ~/.gitignore
 
 echo 'Linking Neovim configuration...'
 ln -s ~/workspace/dotfiles/nvim ~/.config/nvim
+
+echo 'Setting up caddy for reverse proxy local dev...'
+sudo mkdir -p /opt/homebrew/etc/caddy
+sudo n -sf ~/workspace/dotfiles/Caddyfile /opt/homebrew/etc/Caddyfile
 
 echo 'Linking Cursor/VS Code configuration...'
 ln -sf ~/workspace/dotfiles/cursor/settings.json ~/Library/Application\ Support/Cursor/User/settings.json

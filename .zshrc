@@ -1,4 +1,10 @@
+# Load in keys and passwords from local file
 source ~/workspace/dotfiles/.localsecrets
+
+# Load all custom scripts
+for script in ~/workspace/dotfiles/scripts/*.sh; do
+  source "$script"
+done
 
 # ----- Aliases -----
 alias ll='ls -la'
@@ -19,6 +25,7 @@ alias envim='e ~/.config/nvim/'
 alias eworkspaces='e ~/workspace/dotfiles/nvim/workspaces'
 
 alias resi='cd ~/workspace/residesk/Server_Web_Outlook'
+alias ng='ngrok http --url=residesk-ian-dev.ngrok.app 5001'
 
 alias workspace='cd ~/workspace'
 alias dotfiles='cd ~/workspace/dotfiles'
@@ -99,8 +106,7 @@ cursor() {
   if [[ "$1" == "init" ]]; then
     mkdir -p .cursor/rules
     mkdir projects
-    ln -sf ~/workspace/dotfiles/rules/collaboration.mdc .cursor/rules/collaboration.mdc
-    ln -sf ~/workspace/dotfiles/rules/task-list.mdc .cursor/rules/task-list.mdc
+    ln -s ~/workspace/dotfiles/my-rules .cursor/rules/my-rules
     touch .cursor/rules/project.mdc
   else
     command cursor "$@"
