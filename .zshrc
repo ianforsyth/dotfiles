@@ -56,6 +56,7 @@ fl() {
       rclone sync "$REMOTE" "$LOCAL" \
         --delete-excluded \
         --no-update-dir-modtime \
+        --exclude 'node_modules/**' \
         -v \
         $DRY_RUN
       ;;
@@ -65,6 +66,7 @@ fl() {
         --update \
         --no-update-modtime \
         --no-update-dir-modtime \
+        --exclude 'node_modules/**' \
         $DRY_RUN
       ;;
     reset)
