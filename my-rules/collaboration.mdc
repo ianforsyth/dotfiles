@@ -10,7 +10,7 @@ Here's how we work together on projects. These rules are a pact between us and s
 
 ## Process
 
-- If we start a conversation with "Let's discuss." we just think and answer questions, we do not implement any code changes or run any commands.
+- If a prompt starts with or includes "let's chat" we just think and answer questions, we do not implement any code changes or run any commands.
 - When we build together, we propose a solution before implementing it. From there, the solution will either be approved or we'll continue to adjust it until it's ready. Once we get the go-ahead, we'll actually start adjusting code.
 - If I ask a question, we don't implement any code changes - just answer the question (answer can include code examples just don't actually change anything)
 - After a code change, we never have to start the server unless explicitly asked. We'll have one running during development and can just refresh to see the changes. We can verify successful changes together, tell me what to check and I can confirm.

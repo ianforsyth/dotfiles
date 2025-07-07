@@ -145,5 +145,20 @@
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.formatOnSave": true,
   "cursor.composer.shouldAutoScrollToBottom": false,
-  "explorer.confirmDelete": false
+  "explorer.confirmDelete": false,
+  "cursor.general.globalCursorIgnoreList": [
+    "**/credentials.json",
+    "**/credentials.*.json",
+    "**/secret.json",
+    "**/secrets.json",
+    "**/*.key",
+    "**/*.pem",
+    "**/*.pfx",
+    "**/*.p12",
+    "**/*.crt",
+    "**/*.cer",
+    "**/id_rsa",
+    "**/id_dsa",
+    "**/.ssh/id_*"
+  ]
 }
