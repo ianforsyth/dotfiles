@@ -44,6 +44,8 @@ Guidelines for creating and managing task lists in markdown files to track proje
    - path/to/file2.ts - Description of purpose
    ```
 
+3. Each phase should be manually testable. Don't start servers or query databases yourself. We will work together to verify changes took effect and are ready to be marked as complete together.
+
 ## Task List Maintenance
 
 1. Update the task list as you progress:
