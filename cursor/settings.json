@@ -123,6 +123,7 @@
       "commands": ["gitlens.openOnRemote"]
     }
   ],
+  "window.openRecent.maxEntries": 20,
   "workbench.activityBar.orientation": "vertical",
   "workbench.colorCustomizations": {
     "statusBar.foreground": "#5f5f5f",

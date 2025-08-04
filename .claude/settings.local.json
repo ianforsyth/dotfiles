@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(asdf list:*)",
+      "Bash(asdf current:*)",
+      "Bash(npm install:*)",
+      "Bash(asdf reshim:*)"
+    ],
+    "deny": []
+  }
+}
