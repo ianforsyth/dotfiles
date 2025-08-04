@@ -16,6 +16,8 @@ alias c='clear && printf "\e[3J"'
 alias up='docker compose up'
 alias down='docker compose down'
 
+alias dcr='docker-compose exec api bin/rails'
+
 alias e='cursor'
 alias tm='task-master'
 
@@ -34,63 +36,6 @@ alias base='cd ~/workspace/base'
 alias app='cd ~/workspace/base/app'
 alias api='cd ~/workspace/base/api'
 alias hoahq='cd ~/workspace/hoahq'
-
-fl() {
-  local LOCAL="$HOME/workspace/storage-center/wp-content/themes/tsc-intranet"
-  local REMOTE="storage-center:/var/www/html/thestoragecenter_com/intranet/wp-content/themes/tsc-intranet"
-  local DRY_RUN=""
-  local ACTION=""
-
-  # Parse dry-run flag
-  if [[ "$1" == "-d" ]]; then
-    DRY_RUN="--dry-run"
-    ACTION="$2"
-    echo "🧪 Dry run enabled"
-  else
-    ACTION="$1"
-  fi
-
-  case "$ACTION" in
-    pull)
-      echo "🔽 Forcing sync remote → local (mirror: deletes local-only files)"
-      rclone sync "$REMOTE" "$LOCAL" \
-        --delete-excluded \
-        --no-update-dir-modtime \
-        --exclude 'node_modules/**' \
-        -v \
-        $DRY_RUN
-      ;;
-    push)
-      echo "🔼 Syncing local → remote"
-      rclone sync "$LOCAL" "$REMOTE" \
-        --update \
-        --no-update-modtime \
-        --no-update-dir-modtime \
-        --exclude 'node_modules/**' \
-        $DRY_RUN
-      ;;
-    reset)
-      echo "🧹 Mirroring local → remote (removing remote-only files)"
-      rclone sync "$LOCAL" "$REMOTE" \
-        --delete-excluded \
-        --no-update-modtime \
-        --no-update-dir-modtime \
-        $DRY_RUN
-      ;;
-    *)
-      echo "Usage: fl [-d] [pull|push|reset]"
-      ;;
-  esac
-}
-
-pgen() {
-  local timestamp=$(date +"%Y%m%d%H%M%S")
-  local name="$1"
-  local filepath="./projects/${timestamp}-${name}.md"
-
-  touch "$filepath"
-  echo "Created $filepath"
-}
 
 slack() {
   local message
@@ -149,5 +94,5 @@ fi
 # Adding direnv for project-specific docker commands (base app)
 eval "$(direnv hook zsh)"
 
+export PATH="/opt/homebrew/opt/node@20/bin:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
-export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
