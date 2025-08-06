@@ -1,6 +1,9 @@
 # Load in keys and passwords from local file
 source ~/workspace/dotfiles/.localsecrets
 
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
+
 # Load all custom scripts
 for script in ~/workspace/dotfiles/scripts/*.sh; do
   source "$script"
