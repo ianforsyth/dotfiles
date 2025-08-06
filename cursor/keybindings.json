@@ -48,5 +48,9 @@
     "key": "enter",
     "command": "-acceptSelectedSuggestion",
     "when": "acceptSuggestionOnEnter && suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus"
+  },
+  {
+    "key": "cmd+e",
+    "command": "composerMode.background"
   }
 ]
