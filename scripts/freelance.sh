@@ -19,8 +19,8 @@ fl() {
     LOCAL="./wp-content/themes/tsc-intranet"
     REMOTE="storage-center:/var/www/html/thestoragecenter_com/intranet/wp-content/themes/tsc-intranet"
   elif [[ "$PWD_DIR" == *"local/warehouse-anywhere"* ]]; then
-    LOCAL="./app/public/wp-content/themes"
-    REMOTE="beta-warehouse-anywhere:beta.warehouseanywhere.com/public_html/wp-content/themes"
+    LOCAL="./app/public/wp-content/themes/warehouse-anywhere"
+    REMOTE="beta-warehouse-anywhere:beta.warehouseanywhere.com/public_html/wp-content/themes/warehouse-anywhere"
   elif [[ "$PWD_DIR" == *"warehouse-anywhere"* ]]; then
     LOCAL="./wp-content/themes"
     REMOTE="warehouse-anywhere:public_html/wp-content/themes"
@@ -34,8 +34,9 @@ fl() {
     pull)
       echo "🔽 Pulling from remote to local..."
       rclone sync "$REMOTE" "$LOCAL" \
-        --delete-excluded \
-        --size-only \
+        --filter "- node_modules/**" \
+        --filter "- .DS_Store" \
+        --delete-after \
         --no-update-modtime \
         --no-update-dir-modtime \
         -v \
@@ -44,7 +45,8 @@ fl() {
     push)
       echo "🔼 Pushing from local to remote..."
       rclone sync "$LOCAL" "$REMOTE" \
-        --size-only \
+        --exclude "node_modules/**" \
+        --exclude ".DS_Store" \
         --no-update-modtime \
         --no-update-dir-modtime \
         $DRY_RUN
