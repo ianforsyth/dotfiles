@@ -10,7 +10,7 @@
   fixup = !sh -c 'REV=$(git rev-parse $1) && git add . && git commit --fixup $@ && GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash $REV^' -
   s = status
   bd = branch -D
-  cleanup = !git co master && git branch | grep -v "master" | xargs git branch -D
+	cleanup = "!f() { \n  echo \"Switching to master...\"; \n  git co master; \n  echo \"\"; \n  merged=$(git branch --merged | grep -v master); \n  unmerged=$(git branch | grep -v master | grep -v -F \"$merged\"); \n  if [ -n \"$merged\" ]; then \n    echo \"Branches that WILL BE DELETED (already merged):\"; \n    echo \"$merged\" | sed \"s/^/  - /\"; \n  else \n    echo \"No merged branches to delete.\"; \n  fi; \n  echo \"\"; \n  if [ -n \"$unmerged\" ]; then \n    echo \"Branches that WILL BE KEPT (not merged):\"; \n    echo \"$unmerged\" | sed \"s/^/  - /\"; \n    echo \"\"; \n  fi; \n  if [ -n \"$merged\" ]; then \n    echo -n \"Delete the merged branches? (y/N): \"; \n    read -r response; \n    if [ \"$response\" = \"y\" ] || [ \"$response\" = \"Y\" ]; then \n      echo \"$merged\" | xargs git branch -d; \n      echo \"Cleanup complete!\"; \n    else \n      echo \"Cleanup cancelled.\"; \n    fi; \n  fi; \n}; f"
   back = reset --soft HEAD~1
   rim = rebase -i master
   wip = !git add -A && git commit --no-verify -m "WIP"

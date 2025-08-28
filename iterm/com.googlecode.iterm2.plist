@@ -1035,6 +1035,8 @@
 			<string>No</string>
 			<key>Description</key>
 			<string>Default</string>
+			<key>Disable Printing</key>
+			<true/>
 			<key>Disable Window Resizing</key>
 			<false/>
 			<key>Draw Powerline Glyphs</key>
@@ -1379,6 +1381,8 @@
 				<real>0.99697142839431763</real>
 			</dict>
 			<key>Mouse Reporting</key>
+			<false/>
+			<key>Mouse Reporting allow mouse wheel</key>
 			<false/>
 			<key>Name</key>
 			<string>Ian</string>
