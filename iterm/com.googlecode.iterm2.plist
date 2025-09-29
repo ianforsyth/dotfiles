@@ -1391,7 +1391,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>MonaspiceNeNF-Light 13 {"featureSettings":[{"CTFeatureSelectorIdentifier":10,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":4,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":20,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":14,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":18,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":12,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":8,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":6,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":2,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":16,"CTFeatureTypeIdentifier":35}]}</string>
+			<string>MonaspiceNeNF-Light 13 {"featureSettings":[{"CTFeatureSelectorIdentifier":4,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":10,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":12,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":20,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":14,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":18,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":8,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":16,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":2,"CTFeatureTypeIdentifier":35},{"CTFeatureSelectorIdentifier":6,"CTFeatureTypeIdentifier":35}]}</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -1512,6 +1512,8 @@
 			<string>kNextWindowPointerAction</string>
 		</dict>
 	</dict>
+	<key>Print In Black And White</key>
+	<true/>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>VisualIndicatorForEsc</key>

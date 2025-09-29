@@ -9,6 +9,10 @@
 .vscode
 .tool-versions
 
+.claude/todos/
+.claude/shell-snapshots/
+.claude/statsig/
+.claude/projects/
+
 # This is for local secrets within the dotfile repo
 .localsecrets
-.cursor/rules/my-rules
