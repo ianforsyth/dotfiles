@@ -30,7 +30,7 @@ alias envim='e ~/.config/nvim/'
 alias eworkspaces='e ~/workspace/dotfiles/nvim/workspaces'
 
 alias resi='cd ~/workspace/residesk/Server_Web_Outlook'
-alias ng='ngrok http --url=residesk-ian-dev.ngrok.app 5001'
+alias ng='ngrok http --url=residesk-ian-dev.ngrok.app 3000'
 
 alias workspace='cd ~/workspace'
 alias dotfiles='cd ~/workspace/dotfiles'
@@ -39,6 +39,8 @@ alias base='cd ~/workspace/base'
 alias app='cd ~/workspace/base/app'
 alias api='cd ~/workspace/base/api'
 alias hoahq='cd ~/workspace/hoahq'
+alias tsc='cd ~/workspace/local/the-storage-center-intranet'
+alias ssm='cd ~/workspace/local/ssm-plugin'
 
 slack() {
   local message

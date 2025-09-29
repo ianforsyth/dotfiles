@@ -18,6 +18,9 @@ fl() {
   if [[ "$PWD_DIR" == *"storage-center"* ]]; then
     LOCAL="./wp-content/themes/tsc-intranet"
     REMOTE="storage-center:/var/www/html/thestoragecenter_com/intranet/wp-content/themes/tsc-intranet"
+  elif [[ "$PWD_DIR" == *"local/warehouse-anywhere-v2"* ]]; then
+    LOCAL="./app/public/wp-content/themes/warehouse-anywhere"
+    REMOTE="warehouse-anywhere:public_html/wp-content/themes/warehouse-anywhere"
   elif [[ "$PWD_DIR" == *"local/warehouse-anywhere"* ]]; then
     LOCAL="./app/public/wp-content/themes/warehouse-anywhere"
     REMOTE="beta-warehouse-anywhere:beta.warehouseanywhere.com/public_html/wp-content/themes/warehouse-anywhere"

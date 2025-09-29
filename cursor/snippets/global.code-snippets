@@ -1,9 +1,0 @@
-{
-  "Signed dated comment": {
-    "prefix": "cc",
-    "body": [
-      "$LINE_COMMENT IF (${CURRENT_YEAR}/${CURRENT_MONTH}/${CURRENT_DATE}): $1"
-    ],
-    "description": "Insert IF comment with date"
-  }
-}
