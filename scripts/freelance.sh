@@ -15,8 +15,11 @@ fl() {
   fi
 
   # Infer project from directory
-  if [[ "$PWD_DIR" == *"storage-center"* ]]; then
-    LOCAL="./wp-content/themes/tsc-intranet"
+  if [[ "$PWD_DIR" == *"local/the-storage-center"* ]]; then
+    LOCAL="./wp-content"
+    REMOTE="the-storage-center-v2:staging.thestoragecenter.com/public_html/wp-content"
+  elif [[ "$PWD_DIR" == *"storage-center"* ]]; then
+    LOCAL="./app/public/wp-content/themes/tsc-intranet"
     REMOTE="storage-center:/var/www/html/thestoragecenter_com/intranet/wp-content/themes/tsc-intranet"
   elif [[ "$PWD_DIR" == *"local/warehouse-anywhere-v2"* ]]; then
     LOCAL="./app/public/wp-content/themes/warehouse-anywhere"
@@ -39,6 +42,7 @@ fl() {
       rclone sync "$REMOTE" "$LOCAL" \
         --filter "- node_modules/**" \
         --filter "- .DS_Store" \
+        --filter "- uploads/**" \
         --delete-after \
         --no-update-modtime \
         --no-update-dir-modtime \
@@ -50,6 +54,7 @@ fl() {
       rclone sync "$LOCAL" "$REMOTE" \
         --exclude "node_modules/**" \
         --exclude ".DS_Store" \
+        --exclude "uploads/**" \
         --no-update-modtime \
         --no-update-dir-modtime \
         $DRY_RUN
