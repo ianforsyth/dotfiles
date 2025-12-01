@@ -13,6 +13,8 @@
 .claude/shell-snapshots/
 .claude/statsig/
 .claude/projects/
+.claude/debug/
+.claude/file-history/
 
 # This is for local secrets within the dotfile repo
 .localsecrets
