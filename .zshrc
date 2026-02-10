@@ -29,11 +29,12 @@ alias reload='source ~/.zshrc'
 alias envim='e ~/.config/nvim/'
 alias eworkspaces='e ~/workspace/dotfiles/nvim/workspaces'
 
-alias resi='cd ~/workspace/Server_Web_Outlook'
+alias resi='cd ~/workspace/resi-desk'
 alias ng='ngrok http --url=residesk-ian-dev.ngrok.app 3000'
 alias killng='pkill -f ngrok'
 alias resi-test-leasing='DEBUG=true NODE_ENV=production yarn test:leasing-assistant --manual'
 alias resi-start='DEBUG=true NODE_ENV=production yarn start'
+alias resi-web='yarn --cwd Web start'
 
 alias workspace='cd ~/workspace'
 alias dotfiles='cd ~/workspace/dotfiles'
@@ -103,6 +104,9 @@ fi
 # Adding direnv for project-specific docker commands (base app)
 eval "$(direnv hook zsh)"
 
-export PATH="/opt/homebrew/opt/node@20/bin:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+
+# Volta
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"

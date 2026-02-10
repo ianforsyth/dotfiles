@@ -15,6 +15,15 @@
 .claude/projects/
 .claude/debug/
 .claude/file-history/
+.claude/cache/
+.claude/chrome/
+.claude/paste-cache/
+.claude/plans/
+.claude/plugins/
+.claude/stats-cache.json
+.claude/tasks/
+.claude/telemetry/
+.claude/history.jsonl
 
 # This is for local secrets within the dotfile repo
 .localsecrets

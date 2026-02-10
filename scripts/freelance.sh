@@ -15,10 +15,7 @@ fl() {
   fi
 
   # Infer project from directory
-  if [[ "$PWD_DIR" == *"local/the-storage-center"* ]]; then
-    LOCAL="./wp-content"
-    REMOTE="the-storage-center-v2:staging.thestoragecenter.com/public_html/wp-content"
-  elif [[ "$PWD_DIR" == *"storage-center"* ]]; then
+  if [[ "$PWD_DIR" == *"storage-center"* ]]; then
     LOCAL="./app/public/wp-content/themes/tsc-intranet"
     REMOTE="storage-center:/var/www/html/thestoragecenter_com/intranet/wp-content/themes/tsc-intranet"
   elif [[ "$PWD_DIR" == *"local/warehouse-anywhere-v2"* ]]; then
