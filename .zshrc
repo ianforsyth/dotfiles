@@ -4,11 +4,6 @@ source ~/workspace/dotfiles/.localsecrets
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
-# Load all custom scripts
-for script in ~/workspace/dotfiles/scripts/*.sh; do
-  source "$script"
-done
-
 # ----- Aliases -----
 alias ll='ls -la'
 alias ..='cd ..'
@@ -39,10 +34,6 @@ alias resi-web='yarn --cwd Web start'
 alias workspace='cd ~/workspace'
 alias dotfiles='cd ~/workspace/dotfiles'
 alias gambit='cd ~/workspace/gambit'
-alias base='cd ~/workspace/base'
-alias app='cd ~/workspace/base/app'
-alias api='cd ~/workspace/base/api'
-alias hoahq='cd ~/workspace/hoahq'
 alias tsc='cd ~/workspace/local/the-storage-center'
 alias tsci='cd ~/workspace/local/the-storage-center-intranet'
 alias ssm='cd ~/workspace/local/ssm-plugin'
@@ -83,12 +74,17 @@ autoload -Uz vcs_info # Version control info (for branch name in prompt)
 autoload -Uz compinit && compinit # Git completion
 # --------------------
 
+# Load all custom scripts (after compinit so completions register)
+for script in ~/workspace/dotfiles/scripts/*.sh; do
+  source "$script"
+done
+
 # ----- Command Prompt -----
 get_version_control_info() { vcs_info }
 add-zsh-hook precmd get_version_control_info
 zstyle ':vcs_info:git:*' formats ' [%b]'
 setopt PROMPT_SUBST
-PROMPT='%1/%F{yello}${vcs_info_msg_0_}%F{white} → '
+PROMPT='${_prompt_dir}%F{yello}${vcs_info_msg_0_}%F{white} → '
 # ------------------------
 
 # ---- iTerm Tab Title -----
