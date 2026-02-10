@@ -16,9 +16,6 @@ alias down='docker compose down'
 
 alias dcr='docker-compose exec api bin/rails'
 
-alias e='cursor'
-alias tm='task-master'
-
 alias profile='e ~/.zshrc'
 alias reload='source ~/.zshrc'
 alias envim='e ~/.config/nvim/'
@@ -37,6 +34,8 @@ alias gambit='cd ~/workspace/gambit'
 alias tsc='cd ~/workspace/local/the-storage-center'
 alias tsci='cd ~/workspace/local/the-storage-center-intranet'
 alias ssm='cd ~/workspace/local/ssm-plugin'
+alias so='cd ~/workspace/storage-ops'
+alias v='cd ~/workspace/venture'
 
 slack() {
   local message

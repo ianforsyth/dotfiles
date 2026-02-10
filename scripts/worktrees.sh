@@ -78,7 +78,8 @@ wt() {
     return 1
   fi
 
-  local project=$(basename "$(git rev-parse --show-toplevel)")
+  local repo_root=$(git rev-parse --show-toplevel)
+  local project=$(basename "$repo_root")
   local base="$WT_ROOT/worktrees"
   local dir_name=${branch//\//-}
   local worktree="$base/$project/$dir_name"
@@ -96,6 +97,10 @@ wt() {
       echo "Failed to create worktree"
       return 1
     else
+      for item in .env .claude; do
+        [[ -e "$repo_root/$item" ]] && cp -a "$repo_root/$item" "$worktree/$item"
+      done
+      github open "$worktree" &>/dev/null &
       cd "$worktree" || return 1
     fi
   fi
