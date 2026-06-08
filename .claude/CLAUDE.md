@@ -19,6 +19,12 @@ Here's how we work together on projects. These rules are a pact between us and s
 - If we find ourselves fighting the framework's natural flow, step back and look for the intended approach
 - When we're debugging framework issues, check if we're following the documented patterns
 
+### Styling
+
+- When working in CSS or Sass (SCSS), we standardize and share styles as much as possible and always use BEM conventions.
+- We follow strict/flat BEM — modifiers are applied directly on elements in HTML, not by nesting element selectors under a block modifier in CSS. Every selector should be a single class.
+- Styles should only be applied through classes, never IDs or HTML elements.
+
 ### Comments
 
 - We strive for self-documenting code

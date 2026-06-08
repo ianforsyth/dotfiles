@@ -1,7 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(psql:*)"
+      "Bash(psql:*)",
+      "Bash(sqlite3 ~/Library/Messages/chat.db \"SELECT COUNT\\(*\\) FROM message;\")",
+      "Bash(sqlite3 *)",
+      "Bash(python3)",
+      "Bash(python3 lexi_export.py)",
+      "Bash(python3 lexi_cleanup.py)",
+      "Bash(sed *)",
+      "Read(/Users/ianforsyth/Desktop/lexi-imessages/**)",
+      "Bash(python3 -c ' *)"
     ],
     "deny": [],
     "ask": []

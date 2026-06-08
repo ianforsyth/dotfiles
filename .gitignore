@@ -24,6 +24,15 @@
 .claude/tasks/
 .claude/telemetry/
 .claude/history.jsonl
+.claude/scheduled_tasks.lock
 
 # This is for local secrets within the dotfile repo
 .localsecrets
+
+**/.claude/settings.local.json
+.claude/.last-cleanup
+.claude/.last-update-result.json
+/.claude/backups
+/.claude/image-cache
+.claude/mcp-needs-auth-cache.json
+/.claude/sessions

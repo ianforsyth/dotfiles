@@ -5,7 +5,9 @@ source ~/workspace/dotfiles/.localsecrets
 source <(fzf --zsh)
 
 # ----- Aliases -----
-alias ll='ls -la'
+alias ls='eza'
+alias ll='eza -l'
+alias lt='eza --tree'
 alias ..='cd ..'
 # alias rm='rm -i'
 # alias rmd='rm -rf i'
@@ -24,18 +26,21 @@ alias eworkspaces='e ~/workspace/dotfiles/nvim/workspaces'
 alias resi='cd ~/workspace/resi-desk'
 alias ng='ngrok http --url=residesk-ian-dev.ngrok.app 3000'
 alias killng='pkill -f ngrok'
-alias resi-test-leasing='DEBUG=true NODE_ENV=production yarn test:leasing-assistant --manual'
-alias resi-start='DEBUG=true NODE_ENV=production yarn start'
-alias resi-web='yarn --cwd Web start'
+alias resi-test-leasing='DEBUG=true NODE_ENV=production pnpm test:leasing-assistant --manual'
+alias resi-start='DEBUG=true NODE_ENV=production pnpm start'
+alias resi-web='PORTLESS=0 bash scripts/portless-dev.sh web'
 
 alias workspace='cd ~/workspace'
 alias dotfiles='cd ~/workspace/dotfiles'
 alias gambit='cd ~/workspace/gambit'
+alias mercado='cd ~/workspace/mercado'
 alias tsc='cd ~/workspace/local/the-storage-center'
 alias tsci='cd ~/workspace/local/the-storage-center-intranet'
 alias ssm='cd ~/workspace/local/ssm-plugin'
 alias so='cd ~/workspace/storage-ops'
 alias v='cd ~/workspace/venture'
+alias mm='cd ~/workspace/money-maker'
+alias wa='cd ~/workspace/local/warehouse-anywhere-v2/'
 
 slack() {
   local message
@@ -95,9 +100,6 @@ set_tab_title() {
 add-zsh-hook precmd set_tab_title
 fi
 # --------------------------
-
-# Adding direnv for project-specific docker commands (base app)
-eval "$(direnv hook zsh)"
 
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"

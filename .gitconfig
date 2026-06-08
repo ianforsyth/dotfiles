@@ -5,7 +5,7 @@
   co = checkout
   cob = checkout -b
   ac = !git add -A && git commit -m
-	bc = "!f() { base=$(git show-ref --verify --quiet refs/heads/main && echo main || echo master); git cherry -v \"$base\" --abbrev; }; f"
+	bc = "!f() { base=$(git show-ref --verify --quiet refs/heads/main && echo main || echo master); git cherry -v \"origin/$base\" --abbrev; }; f"
   amend = !git add . && git commit --amend --no-edit
   fixup = !sh -c 'REV=$(git rev-parse $1) && git add . && git commit --fixup $@ && GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash $REV^' -
   s = status
@@ -64,6 +64,7 @@
 		fi; \
 	}; f"
 	l = log -n 5 --pretty=format:'%h %s' --no-color
+	rbm = "!f() { base=$(git show-ref --verify --quiet refs/heads/main && echo main || echo master); git pull --rebase origin \"$base\"; }; f"
 [url "ssh://git@github.com/"]
   insteadOf = https://github.com/
 [filter "media"]

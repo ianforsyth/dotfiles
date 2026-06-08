@@ -93,13 +93,24 @@ wt() {
     if [[ -n "$existing" ]]; then
       cd "$existing" || return 1
     elif ! git worktree add "$worktree" "$branch" 2>/dev/null && \
-         ! git worktree add "$worktree" -b "$branch"; then
+         (git fetch origin master 2>/dev/null; ! git worktree add "$worktree" -b "$branch" origin/master); then
       echo "Failed to create worktree"
       return 1
     else
-      for item in .env .claude; do
-        [[ -e "$repo_root/$item" ]] && cp -a "$repo_root/$item" "$worktree/$item"
+      for item in .env .claude .claude/settings.local.json; do
+        if [[ -e "$repo_root/$item" ]] && git -C "$repo_root" check-ignore -q "$item" 2>/dev/null; then
+          mkdir -p "$worktree/$(dirname "$item")"
+          cp -a "$repo_root/$item" "$worktree/$item"
+        fi
       done
+
+      # Symlink Claude project dir so worktrees share conversations + memory
+      local main_claude_dir="$HOME/.claude/projects/$(echo "$repo_root" | tr '/' '-')"
+      local wt_claude_dir="$HOME/.claude/projects/$(echo "$worktree" | tr '/' '-')"
+      if [[ -d "$main_claude_dir" ]] && [[ ! -e "$wt_claude_dir" ]]; then
+        ln -s "$main_claude_dir" "$wt_claude_dir"
+      fi
+      (cd "$worktree" && pnpm install --frozen-lockfile 2>/dev/null || pnpm install)
       github open "$worktree" &>/dev/null &
       cd "$worktree" || return 1
     fi
@@ -126,13 +137,9 @@ wtd() {
   local main_repo=$(git -C "$target" worktree list --porcelain | head -1 | sed 's/^worktree //')
   local branch=$(git -C "$target" rev-parse --abbrev-ref HEAD)
 
-  if git -C "$main_repo" worktree remove "$target"; then
-    git -C "$main_repo" branch -d "$branch" 2>/dev/null || \
-      git -C "$main_repo" branch -D "$branch" 2>/dev/null
-    echo "Removed: $(basename "$(dirname "$target")")/$branch"
-    sed -i '' "\|$target|d" "$history"
-  else
-    echo "Has uncommitted changes — use 'git worktree remove --force' to override"
-    return 1
-  fi
+  git -C "$main_repo" worktree remove --force "$target"
+  git -C "$main_repo" branch -d "$branch" 2>/dev/null || \
+    git -C "$main_repo" branch -D "$branch" 2>/dev/null
+  echo "Removed: $(basename "$(dirname "$target")")/$branch"
+  sed -i '' "\|$target|d" "$history"
 }

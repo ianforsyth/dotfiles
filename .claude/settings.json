@@ -4,7 +4,11 @@
     "typescript-lsp@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true,
+  "verbose": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754325609387
-  }
+  },
+  "skipAutoPermissionPrompt": true
 }
