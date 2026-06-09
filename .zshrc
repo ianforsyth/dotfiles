@@ -6,7 +6,7 @@ source <(fzf --zsh)
 
 # ----- Aliases -----
 alias ls='eza'
-alias ll='eza -l'
+alias ll='eza -l -a'
 alias lt='eza --tree'
 alias ..='cd ..'
 # alias rm='rm -i'
@@ -20,6 +20,7 @@ alias down='docker compose down'
 
 alias dcr='docker-compose exec api bin/rails'
 
+alias e='nvim'
 alias profile='e ~/.zshrc'
 alias reload='source ~/.zshrc'
 alias envim='e ~/.config/nvim/'
