@@ -13,6 +13,8 @@ alias ..='cd ..'
 # alias rmd='rm -rf i'
 alias c='clear && printf "\e[3J"'
 
+alias backup='sh ~/workspace/dotfiles/backup.sh'
+
 alias up='docker compose up'
 alias down='docker compose down'
 
@@ -52,17 +54,6 @@ slack() {
   fi
 
   TOKEN=$SLACK_BOT_TOKEN CHANNEL=log-ian npx slack-msg "$message"
-}
-
-cursor() {
-  if [[ "$1" == "init" ]]; then
-    mkdir -p .cursor/rules
-    mkdir projects
-    ln -s ~/workspace/dotfiles/my-rules .cursor/rules/my-rules
-    touch .cursor/rules/project.mdc
-  else
-    command cursor "$@"
-  fi
 }
 
 sac() {

@@ -1,4 +1,5 @@
 brew "asdf"
+brew "docker"
 brew "eza"
 brew "fzf"
 brew "git"
