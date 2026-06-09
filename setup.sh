@@ -66,6 +66,7 @@ brew install 1password
 brew install rectangle-pro
 brew install obsidian
 brew install todoist
+brew install github
 
 echo "Installing asdf plugins..."
 asdf plugin add nodejs
