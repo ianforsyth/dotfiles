@@ -47,35 +47,13 @@ else
     brew upgrade
 fi
 
-echo 'Installing homebrew utils...'
-brew install asdf
-brew install neovim
-brew install font-monaspace-nerd-font
-brew install fzf
-
-# Needed for yarn
-brew install gnu-tar
-brew install gnupg
-
-echo 'Installing homebrew applications...'
-brew install google-chrome
-brew install google-drive
-brew install slack
-brew install spotify
-brew install 1password
-brew install rectangle-pro
-brew install obsidian
-brew install todoist
-brew install github
+echo 'Installing homebrew utils and applications...'
+brew bundle install --file=~/workspace/dotfiles/Brewfile
 
 echo "Installing asdf plugins..."
 asdf plugin add nodejs
 asdf install nodejs latest
 asdf set nodejs $(asdf list nodejs | tail -1)
-
-asdf plugin add yarn
-asdf install yarn latest
-asdf set yarn $(asdf list yarn | tail -1)
 
 echo "Creating basic directories..."
 mkdir ~/stuff
@@ -92,9 +70,3 @@ ln -s ~/workspace/dotfiles/.gitignore ~/.gitignore
 
 echo 'Linking Neovim configuration...'
 ln -s ~/workspace/dotfiles/nvim ~/.config/nvim
-
-echo 'Linking Cursor/VS Code configuration...'
-ln -sf ~/workspace/dotfiles/cursor/settings.json ~/Library/Application\ Support/Cursor/User/settings.json
-ln -sf ~/workspace/dotfiles/cursor/keybindings.json ~/Library/Application\ Support/Cursor/User/keybindings.json
-ln -sf ~/workspace/dotfiles/cursor/snippets ~/Library/Application\ Support/Cursor/User/snippets
-ln -sf ~/workspace/dotfiles/cursor/.cusor ~/.cusor
