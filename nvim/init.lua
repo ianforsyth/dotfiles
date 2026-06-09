@@ -44,6 +44,7 @@ local plugins = {
     "natecraddock/workspaces.nvim", -- Project workspace management
     config = function()
       require("workspaces").setup({
+        path = vim.fn.expand("~/workspace/dotfiles/nvim/workspaces"),
         hooks = {
           open = "FzfLua files",
         }
