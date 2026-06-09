@@ -48,26 +48,23 @@ else
 fi
 
 echo 'Installing homebrew utils...'
-brew install git
 brew install asdf
 brew install neovim
 brew install font-monaspace-nerd-font
-brew install caddy
 
 # Needed for yarn
 brew install gnu-tar
 brew install gnupg
 
 echo 'Installing homebrew applications...'
-brew install --cask vivaldi
-brew install --cask google-drive
-brew install --cask slack
-brew install --cask spotify
-brew install --cask 1password
-brew install --cask rectangle-pro
-brew install --cask obsidian
-brew install --cask todoist
-brew install --cask cursor
+brew install google-chrome
+brew install google-drive
+brew install slack
+brew install spotify
+brew install 1password
+brew install rectangle-pro
+brew install obsidian
+brew install todoist
 
 echo "Installing asdf plugins..."
 asdf plugin add nodejs
@@ -80,7 +77,6 @@ asdf set yarn $(asdf list yarn | tail -1)
 
 echo "Creating basic directories..."
 mkdir ~/stuff
-mkdir ~/workspace
 
 echo 'Linking .zshrc...'
 ln -s ~/workspace/dotfiles/.zshrc ~/.zshrc
@@ -94,10 +90,6 @@ ln -s ~/workspace/dotfiles/.gitignore ~/.gitignore
 
 echo 'Linking Neovim configuration...'
 ln -s ~/workspace/dotfiles/nvim ~/.config/nvim
-
-echo 'Setting up caddy for reverse proxy local dev...'
-sudo mkdir -p /opt/homebrew/etc/caddy
-sudo n -sf ~/workspace/dotfiles/Caddyfile /opt/homebrew/etc/Caddyfile
 
 echo 'Linking Cursor/VS Code configuration...'
 ln -sf ~/workspace/dotfiles/cursor/settings.json ~/Library/Application\ Support/Cursor/User/settings.json
