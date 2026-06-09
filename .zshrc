@@ -9,8 +9,6 @@ alias ls='eza'
 alias ll='eza -l -a'
 alias lt='eza --tree'
 alias ..='cd ..'
-# alias rm='rm -i'
-# alias rmd='rm -rf i'
 alias c='clear && printf "\e[3J"'
 
 alias backup='sh ~/workspace/dotfiles/backup.sh'
@@ -32,6 +30,8 @@ alias killng='pkill -f ngrok'
 alias resi-test-leasing='DEBUG=true NODE_ENV=production pnpm test:leasing-assistant --manual'
 alias resi-start='DEBUG=true NODE_ENV=production pnpm start'
 alias resi-web='PORTLESS=0 bash scripts/portless-dev.sh web'
+
+alias mve='cd ~/workspace/moove'
 
 alias workspace='cd ~/workspace'
 alias dotfiles='cd ~/workspace/dotfiles'
