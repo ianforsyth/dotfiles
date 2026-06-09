@@ -2,7 +2,7 @@
 
 ## Run the setup script
 - Follow the [instructions here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) to get an ssh key for GitHub
-- Follow [instructions here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to add the sshe key to GitHub
+- Follow [instructions here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account#adding-a-new-ssh-key-to-your-account) to add the sshe key to GitHub
 - Run `mkdir ~/workspace; cd ~/workspace`
 - Run `git clone git@github.com:ianforsyth/dotfiles.git`
 - Run `cd dotfiles`
