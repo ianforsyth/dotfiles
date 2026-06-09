@@ -69,4 +69,5 @@ echo 'Linking .gitignore...'
 ln -s ~/workspace/dotfiles/.gitignore ~/.gitignore
 
 echo 'Linking Neovim configuration...'
+mkdir ~/.config
 ln -s ~/workspace/dotfiles/nvim ~/.config/nvim
