@@ -55,6 +55,7 @@ local plugins = {
   -- Syntax & Parsing
   treesitter = {
     "nvim-treesitter/nvim-treesitter", -- Advanced syntax highlighting and parsing
+    branch = "master",
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup({
@@ -91,13 +92,16 @@ local plugins = {
     "neovim/nvim-lspconfig", -- LSP configuration and setup
     dependencies = { "mason-lspconfig.nvim" },
     config = function()
-      local lspconfig = require("lspconfig")
-      lspconfig.vtsls.setup({})
-      lspconfig.eslint.setup({})
-      
-      vim.keymap.set("n", "gd", "<cmd>FzfLua lsp_definitions<cr>", { desc = "Go to definition" })
-      vim.keymap.set("n", "gr", "<cmd>FzfLua lsp_references<cr>", { desc = "Go to references" })
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation" })
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local function map(lhs, rhs, desc)
+            vim.keymap.set("n", lhs, rhs, { buffer = args.buf, desc = desc })
+          end
+          map("gd", "<cmd>FzfLua lsp_definitions<cr>", "Go to definition")
+          map("gr", "<cmd>FzfLua lsp_references<cr>", "Go to references")
+          map("K", vim.lsp.buf.hover, "Hover documentation")
+        end,
+      })
     end,
   },
 
